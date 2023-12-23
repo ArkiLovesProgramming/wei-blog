@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ContentMapper">
+
+
+    <insert id="sendContent" parameterType="Content">
+        insert into Content(id,textContent,pictureURL,videoURL,authorId,topicIds,likeNum,likeIds,commentNum,commentIds,bookmarkNum,bookmarkIds,transmitNum,transmitIds,level,parentId,releasingTime,childContentId,playNum,deleted,visible)
+        values (#{id},#{textContent},#{pictureURL},#{videoURL},#{authorId},#{topicIds},#{likeNum},#{likeIds},#{commentNum},#{commentIds},#{bookmarkNum},#{bookmarkIds},#{transmitNum},#{transmitIds},#{level},#{parentId},#{releasingTime},#{childContentId},#{playNum},#{deleted},#{visible})
+    </insert>
+
+    <select id="getAllContents" resultType="Content">
+        select * from Content
+    </select>
+
+<!--    level默认0，因为是给home页面用的-->
+    <select id="conByAuthIds"  resultType="Content">
+        select *
+        from Content
+        where authorId in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+             #{id}
+        </foreach>
+        and level = '0'
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i') desc
+        <if test="page!=null">
+            limit ${page.currentPage},${page.pageSize};
+        </if>
+    </select>
+
+    <select id="conByIds" resultType="Content">
+        select *
+        from Content
+        where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i') desc;
+    </select>
+
+    <select id="mediaConByAuthId" resultType="Content">
+        select *
+        from Content
+        where authorId=#{authorId} and
+        (videoURL!='0' or pictureURL!='0')
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i') desc
+        <if test="page!=null">
+            limit ${page.currentPage},${page.pageSize}
+        </if>
+    </select>
+
+    <select id="conById" parameterType="java.lang.String" resultType="Content">
+        select * from Content
+        where id = #{id}
+    </select>
+
+    <update id="likeContent" parameterType="java.lang.String">
+        update Content set likeNum=likeNum+1,likeIds=concat(likeIds,'${userId},')
+        where id = #{contentId}
+    </update>
+    <update id="unlikeContent" parameterType="java.lang.String">
+        update Content set likeNum=likeNum-1,likeIds=replace(likeIds,'${userId},','')
+        where id = #{contentId}
+    </update>
+
+    <update id="updateContent" parameterType="Content">
+        update Content
+        <trim prefix="set" suffixOverrides=",">
+            <if test="textContent!=null">textContent=#{textContent},</if>
+            <if test="pictureURL!=null">pictureURL=#{pictureURL},</if>
+            <if test="videoURL!=null">videoURL=#{videoURL},</if>
+            <if test="authorId!=null">authorId=#{authorId},</if>
+            <if test="topicIds!=null">topicIds=#{topicIds},</if>
+            <if test="likeNum!=null">likeNum=#{likeNum},</if>
+            <if test="likeIds!=null">likeIds=#{likeIds},</if>
+            <if test="commentNum!=null">commentNum=#{commentNum},</if>
+            <if test="commentIds!=null">commentIds=#{commentIds},</if>
+            <if test="bookmarkNum">bookmarkNum=#{bookmarkNum},</if>
+            <if test="bookmarkIds!=null">bookmarkIds=#{bookmarkIds},</if>
+            <if test="transmitNum!=null">transmitNum=#{transmitNum},</if>
+            <if test="transmitIds!=null">transmitIds=#{transmitIds},</if>
+            <if test="level!=null">level=#{level},</if>
+            <if test="parentId!=null">parentId=#{parentId},</if>
+            <if test="childContentId!=null">childContentId=#{childContentId},</if>
+            <if test="playNum!=null">playNum=#{playNum},</if>
+            <if test="deleted!=null">deleted=#{deleted},</if>
+            <if test="visible!=null">visible=#{visible},</if>
+        </trim>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <select id="getSField" parameterType="java.lang.String" resultType="java.lang.String">
+        select ${field}
+        from Content
+        where id = #{contentId}
+    </select>
+
+    <select id="getIField" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select ${field}
+        from Content
+        where id = #{contentId}
+    </select>
+
+    <select id="getChildCon" parameterType="java.lang.String" resultType="Content">
+        select * from Content
+        where parentId = #{parentId} and level = #{level}
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i') desc;
+    </select>
+
+
+<!--    从top5里在进行时间排序-->
+    <select id="consByTopicId" resultType="Content">
+        select * from
+        (SELECT * from Content where
+        level = 0 and DATEDIFF(NOW(),str_to_date(releasingTime,'%Y/%m/%d %H/%i')) &lt;= 10
+        order by likeNum*3+commentNum*2+transmitNum DESC
+        ) as source
+        where topicIds like CONCAT('%',#{topicId},'%')
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i') desc
+        <if test="page!=null">
+            limit ${page.currentPage},${page.pageSize}
+        </if>
+    </select>
+
+    <select id="allConsBySql" parameterType="java.lang.String" resultType="Content">
+        select * from Content
+        ${sql}
+    </select>
+
+    <select id="allPhotoContent" resultType="Content">
+        select * from Content
+        where pictureURL != '0'
+    </select>
+
+
+</mapper>

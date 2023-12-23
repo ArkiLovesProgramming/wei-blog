@@ -1,0 +1,465 @@
+body{
+	margin: auto;
+}
+.box{
+	/* 不能加,加了的话,box只有700多px,然后右边的stikcy也会失效,不加的话,height能知道延伸 */
+	/* height: 100%; */
+	width: 100%;
+	/* padding: 0px 8%;
+	background-color: silver; */
+	margin: 0px!important;
+}
+.top{
+	height: 46px;
+	/* background-color: white; */
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+a:hover {
+	text-decoration: none;
+	color: black;
+}
+#logo:hover {
+	background-color: white;
+}
+input{
+	background:none;
+	outline:none;
+	border:none;
+}
+
+
+
+.aspectration {
+	position: relative; /*因为容器所有子元素需要绝对定位*/
+	height: 0; /*容器高度是由padding来控制，盒模型原理告诉你一切*/
+	width: 100%;
+	/* z-index: -1;/* 让出来的账号box盖住content的图  */
+}
+
+.aspectration[data-ratio="16:9"] {
+	padding-top: 56.25%;
+}
+.aspectration[data-ratio="4:3"]{
+	padding-top: 75%;
+}
+.aspectration[data-ratio="5:4"]{
+	padding-top: 80%;
+}
+.aspectration[data-ratio="7:1"]{
+	padding-top: 14.28%;
+}
+.aspectration[data-ratio="4:1"]{
+	padding-top: 25%;
+}
+
+.aspectration > * {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+
+.read-write-plaintext-only {
+	-webkit-user-modify: read-write-plaintext-only;
+}
+
+#picture_enlargement_box{
+	display: none;
+	position:fixed;
+	top: 0px;
+	height: 100%;
+	width: 100%;
+	background-color:#000;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 10;
+	text-align:center;
+	overflow: hidden;
+}
+#picture_enlargement_box img{
+	height: 100%;
+	/* max-width: 80%; */
+}
+
+.suspend-cover{
+	position: fixed;
+	background: rgba(0, 0, 0, 0.2);
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	/* z-index: 3; */
+	display: none;
+}
+.fake-alert-box{
+	position: fixed;
+	bottom: 40px;
+	height: 46px;
+	width: 100%;
+	z-index: 5;
+	display: none;
+}
+.fakeSession{
+	display: none;
+}
+.alert-box{
+	border-radius: 8px;
+	margin: 0 auto;
+	background-color: #499bea;
+	color: white;
+	height: 46px;
+	width: 388px;
+	line-height: 46px;
+	padding: 0px 16px;
+	font-size: 14px;
+	text-align: center;
+}
+
+@media (max-width: 576px){
+	.alert-box{
+		margin: 0;
+		width: 100%;
+		border-radius: 0px;
+	}
+	.fake-alert-box{
+		bottom: 0px;
+	}
+}
+
+.sticks-list-box{
+	display: none;
+	position: absolute;
+	width: 320px;
+	background-color: #FFFFFF;
+	/* height: 400px; */
+	top: 54px;
+	/* top: -302px; */
+	right: -140px;
+	border-radius: 16px;
+	box-shadow: 0px 0px 5px #b9b8bb;
+	z-index: 9;
+}
+
+.sticks-list-box .slb-title{
+	padding: 12px;
+	font-size: 17px;
+	font-weight: 700;
+	color: rgb(15, 20, 25);
+
+}
+.triangle-icon{
+	transform: rotate(45deg);
+	position: absolute;
+	height: 12px;
+	width: 12px;
+	background-color: #ffffff;
+	bottom: 43px;
+	left: 156px;
+	box-shadow: 0px 0px 5px #b9b8bb;
+	z-index: 5;
+	/* bottom: -241px; */
+}
+.triangle-icon2{
+	transform: rotate(0deg)!important;
+	bottom: 37px;
+	left: 150px;
+	width: 25px;
+	box-shadow: none;
+	/* bottom: -235px; */
+}
+.sticks-list-box .sticks-list-show{
+	padding: 12px;
+	overflow: auto;
+	max-height: 188px;
+	/* background-color: #80BDFF; */
+}
+.stick-item-row .stick-item{
+	height: 25px;
+	margin: 0px;
+	padding: 2px 4px;
+	border-radius: 5px;
+	text-align: center;
+	transition: background-color 0.15s;
+	overflow: hidden;
+}
+.stick-item-row .stick-item:hover{
+	background-color: #eeeff1;
+	cursor: pointer;
+}
+.stick-item-row .stick-item img{
+	margin-bottom: 7px;
+	height: 21px;
+	width: 21px;
+}
+.sticks-show-box{
+	height: 61px;
+	padding: 12px;
+	border-top: #f0f3f4 solid 1px;
+}
+.sticks-show-box img{
+	height: 36px;
+	width: 36px;
+}
+
+.content-title{
+	height: 48px;
+	width: 100%;
+	padding: 12px 16px;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 24px;
+}
+.content-title img{
+	width: 39px;
+	padding-right: 15px;
+	height: 24px;
+	position: relative;
+	bottom: 2px;
+}
+
+.related-topic-box{
+	height: 64px;
+	width: 100%;
+	padding: 12px 16px;
+	background-color: white;
+}
+.related-topic-box .rtb-top{
+	height: 24px;
+	line-height: 24px;
+}
+.related-topic-box .rtb-top .rtb-top-img-box{
+	border-radius: 50%;
+}
+.related-topic-box .rtb-top .rtb-top-img-box img{
+	height: 24px;
+	width: 24px;
+	vertical-align: top;
+}
+.related-topic-box .rtb-top .rtb-top-title{
+	font-size: 20px;
+	font-weight: 800;
+}
+.related-topic-box .rtb-bottom{
+	font-size: 13px;
+	line-height: 16px;
+	font-weight: 400;
+	color: rgb(83, 100, 113);
+}
+.related-topic-show{
+	height: 64px;
+	width: 100%;
+	padding: 12px 16px;
+	background-color: white;
+}
+.related-topic-show:hover{
+	background-color: #f7f7f7;
+	cursor: pointer;
+}
+.related-topic-show .rts-info{
+	height: 40px;
+	line-height: 20px;
+}
+.related-topic-show .rts-info div:first-child{
+	font-size: 15px;
+	font-weight: 700;
+}
+.related-topic-show .rts-info div:first-child:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+.related-topic-show .rts-info div:last-child{
+	font-size: 15px;
+	font-weight: 400;
+	color: rgb(83, 100, 113);
+}
+.follow-topic-btn{
+	padding: 0px 16px;
+	margin-top: 4px;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	height: 32px;
+	border:  black solid 1px;
+	background-color: #000000;
+	color: white;
+	border-radius: 20px;
+	font-size: 14px;
+	line-height: 16px;
+	font-weight: 700;
+}
+.follow-topic-btn:hover{
+	background-color: #282C30;
+	cursor: pointer;
+}
+
+.content-topic-show{
+	height: 64px;
+	width: 100%;
+	/* background-color: #7eea81; */
+	padding: 12px 16px;
+	border-bottom: #edf0f2 solid 1px;
+	transition: background-color 0.15s;
+}
+.content-topic-show:hover{
+	background-color: #f7f7f7;
+	cursor: pointer;
+}
+.content-topic-show .topic-a-box{
+	background-color: #499BEA;
+	width: 28px;
+	height: 28px;
+	padding: 4px 4px 4px 4px;
+	border-radius: 50%;
+	margin-right: 12px;
+}
+.content-topic-show .topic-a-box img{
+	width: 20px;
+	height: 20px;
+	display: block;
+}
+.cts-content .cts-title{
+	font-size: 15px;
+	font-weight: 800;
+	line-height: 20px;
+}
+.cts-content .cts-title:hover{
+	text-decoration: underline;
+}
+.cts-content .cts-detail{
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 20px;
+	color: rgb(83, 100, 113);
+}
+.cts-follow-btn{
+	height: 32px;
+	padding: 0px 16px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 32px;
+	border-radius: 16px;
+	color: white;
+	background-color: black;
+	border: black solid 1px;
+	/* border: #d1d9dd solid 1px; */
+}
+.cts-follow-btn:hover{
+	cursor: pointer;
+	background-color: #282c30;
+}
+.cts-follow-btn-clicked{
+	background-color: white!important;
+	color: black!important;
+	border: #d1d9dd solid 1px!important;
+}
+.cts-follow-btn-clicked:hover{
+	background-color: #fbe9ea!important;
+	border: #f5cbcf solid 1px;
+	color: rgb(244,33,46)!important;
+	cursor: pointer;
+}
+
+/* 放在输入框里的emoji */
+.emoji-item {
+	/* position: relative;
+	top: 8px; */
+	margin: 0px 2px;
+	width: 24px;
+	height: 24px;
+	/* background-position: 0px 0px; */
+	/* background: url("../images/emojis/emoji_spriteS.png"); */
+	display: inline-block;
+	vertical-align: top;
+}
+
+.myButton{
+	height: 50px;
+	/* width: auto; */
+	padding: 0px 32px;
+	background-color: #499BEA;
+	color: white;
+	font-size: 15px;
+	font-weight: 700;
+	border-radius: 34px;
+	line-height: 50px;
+	transition: background-color 0.15s;
+}
+.myButton:hover{
+	background-color: #428cd2;
+	cursor: pointer;
+}
+
+/*每个页面都有的发送窗口悬浮！*/
+.suspend-send-box{
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	background-color: rgba(0,0,0,0.4);
+	display: none;
+}
+.suspend-send-box .sendContentBox{
+	/* position: relative; */
+	width: 600px;
+	max-height: 660px;
+	overflow: scroll;
+	background-color: white;
+	margin: 0 auto;
+	margin-top: 36px;
+	border-radius: 16px;
+	padding-bottom: 0px;
+}
+.suspend-send-box .sticks-list-box{
+	left: -80px!important;
+}
+.suspend-send-box .sticks-list-box .triangle-icon{
+	left: 92px!important;
+}
+.suspend-send-box .sticks-list-box .triangle-icon2{
+	left: 88px!important;
+}
+.suspend-send-box .send-box-bottom{
+	margin-bottom: 12px;
+}
+
+.null-alert{
+	color: rgb(83, 100, 113);
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 100px;
+	text-align: center;
+	height: 100px;
+}
+
+.follow-people-btn{
+
+}
+.follow-people-btn-clicked{
+	background-color: white!important;
+	border: rgb(207, 217, 222) solid 1px!important;
+	color: black!important;
+}
+.follow-people-btn-clicked:hover{
+	background-color: #fbe9ea!important;
+	border: #e1cdca solid 1px!important;
+	color: rgb(244,33,46)!important;
+	cursor: pointer;
+}
+
+.ct-title{
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 46px;
+	display: inline-block;
+	margin-left: 15px;
+}
+
+.zoomable_pic{
+	cursor: pointer;
+}

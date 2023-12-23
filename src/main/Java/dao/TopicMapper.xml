@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TopicMapper">
+
+    <insert id="addTopic" parameterType="Topic">
+        insert into Topic(id,name,isParent,parentId,userInTopicIds,userInTopicNum,contentNum,contentIds)
+        values (#{id},#{name},#{isParent},#{parentId},#{userInTopicIds},#{userInTopicNum},#{contentNum},#{contentIds})
+    </insert>
+
+    <select id="getAllTopic" resultType="Topic">
+        select * from Topic
+    </select>
+
+    <select id="getParentTopic" resultType="Topic">
+        select * from Topic
+        where isParent = 1
+    </select>
+
+    <select id="topicByPId" resultType="Topic">
+        select * from Topic
+        where parentId = #{parentId}
+    </select>
+
+    <select id="topTopics" resultType="Topic">
+        select * from Topic
+        <choose>
+            <when test="type=='all'">
+
+            </when>
+            <when test="type=='parent'">
+                where parentId = '0'
+            </when>
+            <when test="type=='children'">
+                where parentId != '0'
+            </when>
+            <otherwise>
+                where parentId = #{type}
+            </otherwise>
+        </choose>
+        ORDER BY userInTopicNum*2+contentNum DESC;
+--         top逻辑,type可以为类别id，直接查询某个类别下的topic的排序
+    </select>
+
+    <select id="topicById" resultType="Topic">
+        select * from Topic
+        where id = #{topicId}
+    </select>
+
+    <update id="updateTopic" parameterType="Topic">
+        update Topic
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id!=null">id=#{id},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="parentId!=null">parentId=#{parentId},</if>
+            <if test="isParent!=null">isParent=#{isParent},</if>
+            <if test="userInTopicIds!=null">userInTopicIds=#{userInTopicIds},</if>
+            <if test="userInTopicNum!=null">userInTopicNum=#{userInTopicNum},</if>
+            <if test="contentNum!=null">contentNum=#{contentNum},</if>
+            <if test="contentIds!=null">contentIds=#{contentIds},</if>
+        </trim>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+</mapper>

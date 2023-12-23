@@ -1,0 +1,105 @@
+.picture-edition-area-back{
+    position: absolute;
+    z-index: 4;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: none;
+}
+.picture-edition-area{
+    overflow: hidden;
+    width: 600px;
+    height: 658.8px;
+    margin: 0 auto;
+    border-radius: 18px;
+    background-color: white;
+}
+.picture-edition-area .pea-back-btn{
+    padding: 4px;
+}
+.picture-edition-area .pea-back-btn img{
+    width: 28px;
+    height: 28px;
+    vertical-align: top;
+}
+.operation-area{
+    height: 551.8px;
+}
+.pea-bottom-funs{
+    height: 54px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pbf-btn{
+    width: 21px;
+    height: 21px;
+    /* background-color: #0056B3; */
+    border-radius: 50%;
+    text-align: center;
+    line-height: 18px;
+    font-weight: 700;
+    color: #d0d1d4;
+}
+#imgBox {
+    overflow: hidden;
+    height: 100%;
+}
+#photo {
+
+}
+.img-preview {
+    display: inline-block;
+    overflow: hidden
+}
+.showImgBox {
+    width: 140px;
+    height: 140px;
+    display: inline-block
+}
+#showImg {
+    max-width: 100%
+}
+
+
+/* 美化进度条 */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 300px;
+    border-radius: 10px; /*这个属性设置使填充进度条时的图形为圆角*/
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 10px; /*将轨道设为圆角的*/
+    background-color: #e7e7e8;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 23px;
+    width: 23px;
+    /* border: rgb(255,255,255,1) solid 4px; */
+    margin-top: -9px; /*使滑块超出轨道部分的偏移量相等*/
+    background: #499bea;
+    border-radius: 50%; /*外观设置为圆形*/
+    box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+}
+input[type=range]::-webkit-slider-thumb:hover{
+    border: #e7f2f9 solid 4px;
+}
+/*滑道已填充的部分*/
+input[type=range]::-ms-fill-lower {
+    background: #499bea;
+}

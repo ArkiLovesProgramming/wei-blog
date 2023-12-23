@@ -1,0 +1,118 @@
+.search_box{
+	max-width: 100%;
+	margin: 0px;
+}
+.search_box input{
+
+}
+.search-box-area{
+	padding: 0px 16px!important;
+	position: static;
+	background-color: rgba(255, 255, 255, 0.0);
+	/* -webkit-backdrop-filter: blur(10px); */
+	/* backdrop-filter: blur(10px); */
+}
+
+.search-result-box{
+	left: 8px;
+}
+
+.explore-trends{
+	z-index: 2;
+	background-color: white;
+	border-radius: 0px;
+	overflow: hidden;
+	border-bottom: #f0f3f4 solid 1px;
+	padding-bottom: 3px;
+}
+.window .center_top{
+	background-color: rgba(255, 255, 255, 0.1);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}
+.explore-wtf{
+	/* position: sticky; 
+	top: 434px; */
+}
+
+/* 探索页面未登录时候下面的登录提醒 */
+.bottomLoginAlert{
+	background-color: rgb(29, 155, 240);
+	/* height: 72px; */
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	z-index: 4;
+	padding: 12px 8px;
+	margin: 0!important;
+}
+.bottomLoginAlert .bla-info{
+	height: 48px;
+	margin-left: 8%;
+}
+.bottomLoginAlert .bla-info span:first-child{
+	font-size: 23px;
+	font-weight: 700;
+	color: white;
+	line-height: 28px;
+	display: block;
+}
+.bottomLoginAlert .bla-info span:last-child{
+	font-size: 15px;
+	font-weight: 400;
+	color: white;
+	line-height: 20px;
+	display: block;
+}
+.bla-func{
+	height: 48px;
+	padding: 6px 20px;
+}
+.bla-func .bla-func-item{
+	height: 36px;
+	margin-left: 12px;
+	font-size: 15px;
+	font-weight: 700;
+	border-radius: 18px;
+	padding: 0px 16px;
+	line-height: 32px;
+	text-align: center;
+}
+.bla-func .bla-func-item:first-child{
+	background-color: transparent;
+	border: rgba(255, 255, 255, 0.35) solid 1px;
+	color: white;
+}
+.bla-func .bla-func-item:first-child:hover{
+	background-color: #56a4ec;
+	cursor: pointer;
+}
+.bla-func .bla-func-item:last-child{
+	background-color: white;
+	border: white solid 1px;
+	color: black;
+}
+.bla-func .bla-func-item:last-child:hover{
+	background-color: #d8dbdc;
+	border: #d8dbdc solid 1px;
+	cursor: pointer;
+}
+@media (max-width: 700px){
+	.bottomLoginAlert .bla-info{
+		display: none;
+	}
+	.bla-func{
+		padding: 6px 6px;
+		width: 100%;
+	}
+	.bla-func .bla-func-item{
+		margin-left: 0px;
+		width: 50%;
+	}
+	.bla-func .bla-func-item:last-child{
+		margin-left: 14px;
+	}
+	.bottomLoginAlert{
+		padding: 6px 8px;
+	}
+}

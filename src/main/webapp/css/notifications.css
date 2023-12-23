@@ -1,0 +1,77 @@
+.window .top{
+    height: 99px;
+}
+.ct-func-switch{
+    height: 53px;
+    width: 100%;
+    border-bottom: #edf0f2 solid 1px;
+}
+.ctfs-item{
+    height: 53px;
+    font-size: 15px;
+    font-weight: 700;
+    color: rgb(83, 100, 113);
+    text-align: center;
+}
+.ctfs-item:hover{
+    background-color: #E7E7E8;
+    cursor: pointer;
+}
+.ctfs-item>span{
+    min-width: 68px;
+    display: inline-block;
+    border-top: transparent solid 4px;
+    border-bottom: transparent solid 4px;
+    line-height: 45px;
+}
+.ctfs-item-selected{
+
+}
+.ctfs-item-selected>span{
+    color: black!important;
+    border-top: transparent solid 4px;
+    border-bottom: #499BEA solid 4px;
+}
+
+.notification-area{
+
+}
+
+.notification-item{
+    padding: 12px 16px;
+    border-bottom: #edf0f2 solid 1px;
+}
+.notification-item:hover{
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
+.notification-item:last-child{
+    border-bottom: none;
+}
+.notification-item .nti-left{
+    /* mar */
+    margin-left: 18px;
+    margin-right: 12px;
+}
+.notification-item .nti-left img{
+    width: 30px;
+    height: 30px;
+}
+
+.nti-info-area{
+
+}
+.nti-info-area .nia-top{
+    margin-bottom: 12px;
+}
+.nti-info-area .nia-top img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.nti-info-area .nia-content{
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 20px;
+}
+

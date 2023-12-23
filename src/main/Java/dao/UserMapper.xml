@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserMapper">
+    <!--    结果集映射-->
+<!--    其实这里没必要映射，mysql对于这种一样的字段会自动映射-->
+    <resultMap id="UserResult" type="User">
+        <id column="id" property="id" />
+        <result column="name" property="name"/>
+        <result column="gender" property="gender" />
+        <result column="password" property="password"/>
+        <result column="accountId" property="accountId"/>
+        <result column="email" property="email"/>
+        <result column="region" property="region"/>
+        <result column="birthday" property="birthday"/>
+        <result column="profilePicUrl" property="profilePicUrl"/>
+        <result column="topicIds" property="topicIds"/>
+        <result column="signature" property="signature"/>
+        <result column="followingNum" property="followingNum"/>
+        <result column="followingIds" property="followingIds"/>
+        <result column="followerNum" property="followerNum"/>
+        <result column="followerIds" property="followerIds"/>
+        <result column="likedContentIds" property="likedContentIds"/>
+        <result column="bookmarkContentIds" property="bookmarkContentIds"/>
+    </resultMap>
+
+<!--    <select id="addUser" parameterType="User" resultMap="UserResult">-->
+<!--        select * from User-->
+<!--        where account=#{account}-->
+<!--          and password=#{password}-->
+<!--    </select>-->
+
+    <insert id="addUser" parameterType="User">
+        insert into User(id,name,gender,password,accountId,email,region,birthday,profilePicUrl,bgPicUrl,topicIds,signature,followingNum,followingIds,followerIds,likedContentIds,bookmarkContentIds,creatingTime)
+        values (#{id},#{name},#{gender},#{password},#{accountId},#{email},#{region},#{birthday},#{profilePicUrl},#{bgPicUrl},#{topicIds},#{signature},#{followingNum},#{followingIds},#{followerIds},#{likedContentIds},#{bookmarkContentIds},#{creatingTime})
+    </insert>
+
+    <select id="checkUser" parameterType="java.lang.String" resultType="User">
+        select * from User
+        where email = #{email} and password = #{password}
+    </select>
+
+    <select id="getUserById" parameterType="java.lang.String" resultType="User">
+        select * from User
+        where id = #{id}
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        update User
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">name=#{name},</if>
+            <if test="gender!=null">gender=#{gender},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="accountId!=null">accountId=#{accountId},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="region!=null">region=#{region},</if>
+            <if test="birthday!=null">birthday=#{birthday},</if>
+            <if test="profilePicUrl!=null">profilePicUrl=#{profilePicUrl},</if>
+            <if test="bgPicUrl!=null">bgPicUrl=#{bgPicUrl},</if>
+            <if test="topicIds!=null">topicIds=#{topicIds},</if>
+            <if test="signature!=null">signature=#{signature},</if>
+            <if test="followingNum!=null">followingNum=#{followingNum},</if>
+            <if test="followingIds!=null">followingIds=#{followingIds},</if>
+            <if test="followerNum!=null">followerNum=#{followerNum},</if>
+            <if test="followerIds!=null">followerIds=#{followerIds},</if>
+            <if test="likedContentIds!=null">likedContentIds=#{likedContentIds},</if>
+            <if test="bookmarkContentIds!=null">bookmarkContentIds=#{bookmarkContentIds},</if>
+            <if test="creatingTime!=null">creatingTime=#{creatingTime},</if>
+        </trim>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <select id="getSField" parameterType="java.lang.String" resultType="java.lang.String">
+        select ${field}
+        from User
+        where id = #{userId}
+    </select>
+
+    <select id="usersByIds" resultType="User">
+        select * from User
+        where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        ${orderSql}
+    </select>
+    <select id="allUsers" resultType="User">
+        select * from User
+    </select>
+
+    <select id="whoToFollower" resultType="User">
+        select * from User
+        where id != #{userId}
+        order by followerNum
+        <if test="page!=null">
+            limit ${page.currentPage},${page.pageSize};
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ChatMapper">
+
+    <select id="chatsByCtactId" resultType="Chat">
+        select * from Chat
+        where contactId = #{contactId}
+        and deleted = 0
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i/%s')
+    </select>
+
+    <insert id="addChat" parameterType="Chat">
+        insert into Chat(id,contactId,textContent,senderId,receiverId,releasingTime,pictureURL,videoURL,deleted,readed)
+        values (#{id},#{contactId},#{textContent},#{senderId},#{receiverId},#{releasingTime},#{pictureURL},#{videoURL},#{deleted},#{readed})
+    </insert>
+
+    <select id="chatsNum" resultType="java.lang.Integer">
+        select count(*) from Chat
+        where senderId = #{senderId}
+        and receiverId = #{receiverId}
+        and readed = 0 and deleted = 0
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i/%s')
+    </select>
+
+    <select id="chatsBySRId" resultType="Chat">
+        select * from Chat
+        where senderId = #{senderId}
+        and receiverId = #{receiverId}
+        and readed = 0 and deleted = 0
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i/%s')
+        <if test="page!=null">
+            limit ${page.currentPage},${page.pageSize}
+        </if>
+    </select>
+
+    <select id="lastChatInfo" resultType="Chat">
+        select * from Chat
+        where contactId = #{contactId}
+        and readed = 0 and deleted = 0
+        order by str_to_date( releasingTime,'%Y/%m/%d %H/%i/%s') desc
+        limit 1
+    </select>
+
+</mapper>

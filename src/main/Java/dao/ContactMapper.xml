@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ContactMapper">
+
+    <insert id="addContact" parameterType="Contact">
+        insert into Contact(id,creator,contactIds,lastContactTime,lastContent,creatingTime,closedIds)
+        values (#{id},#{creator},#{contactIds},#{lastContactTime},#{lastContent},#{creatingTime},#{closedIds})
+    </insert>
+
+    <select id="contactsByUserId" resultType="Contact">
+        select * from Contact
+        where contactIds like CONCAT('%',#{userId},'%')
+        and closedIds not LIKE CONCAT('%',#{userId},'%')
+        order by str_to_date( lastContactTime,'%Y/%m/%d %H/%i') desc
+    </select>
+
+    <select id="contactsByUserIds" resultType="Contact">
+        select * from Contact
+        where contactIds like CONCAT('%',#{userId1},'%') and contactIds like CONCAT('%',#{userId2},'%')
+          and closedIds not LIKE CONCAT('%',#{userId1},'%') and closedIds not LIKE CONCAT('%',#{userId2},'%')
+        order by str_to_date( lastContactTime,'%Y/%m/%d %H/%i') desc
+    </select>
+
+    <select id="idByUserIds" resultType="java.lang.String">
+        select id from Contact
+        where contactIds like CONCAT('%',#{userId1},'%')
+        and contactIds like CONCAT('%',#{userId2},'%')
+    </select>
+
+
+</mapper>
