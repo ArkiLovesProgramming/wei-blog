@@ -1,6 +1,6 @@
 # WEIBlog
 
-This is a product-level comprehensive social blog platform using SSM architecture, which implements user authentication and authorization, blog publishing, blog interaction, user interaction network, blog, user, media file support, topic search engine, personalized recommendation content, real-time online chat and other functions.
+This is a product-level responsive comprehensive social blog platform using SSM architecture, which implements user authentication and authorization, blog publishing, blog interaction, user interaction network, blog, user, media file support, topic search engine, personalized recommendation content, real-time online chat and other functions.
 
 ## Tech stacks
 
