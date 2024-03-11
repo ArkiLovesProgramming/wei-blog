@@ -35,7 +35,6 @@ public class ContentController {
     @Qualifier("TopicServiceImpl")//指定service里定义的bean
     private TopicService topicService;
 
-
     @RequestMapping(value = "/sendContent",method = RequestMethod.POST)
     @ResponseBody
     public Content sendContent(@RequestBody(required = false) Content content){

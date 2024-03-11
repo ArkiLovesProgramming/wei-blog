@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
+    //    although it looks redundant, but it conforms to principle of separation of service layer and bussiness logic layer
     public int addUser(User user) {
         return this.userMapper.addUser(user);
     }
