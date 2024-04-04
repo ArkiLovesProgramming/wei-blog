@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.NotificationMapper">
+
+
+    <insert id="notify" parameterType="Notification">
+        insert into Notification(id,type,textContent,targetUserId,creatingTime,userId,readed,deleted)
+        values (#{id},#{type},#{textContent},#{targetUserId},#{creatingTime},#{userId},#{readed},#{deleted})
+    </insert>
+
+    <select id="notisByTUId" parameterType="java.lang.String" resultType="Notification">
+        select * from Notification
+        where targetUserId = #{targetUserId}
+        and deleted = 0
+        order by str_to_date( creatingTime,'%Y/%m/%d %H/%i') desc;
+    </select>
+
+    <update id="updateNotification" parameterType="Notification">
+        update Notification
+        <trim prefix="set" suffixOverrides=",">
+            <if test="type!=null">type=#{type},</if>
+            <if test="textContent!=null">textContent=#{textContent},</if>
+            <if test="userId!=null">userId=#{userId},</if>
+            <if test="creatingTime!=null">creatingTime=#{creatingTime},</if>
+            <if test="readed!=null">readed=#{readed},</if>
+            <if test="deleted!=null">deleted=#{deleted},</if>
+        </trim>
+        <where>
+            targetUserId=#{targetUserId}
+        </where>
+    </update>
+
+    <select id="notisNumByTUId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(*) from Notification
+        where targetUserId = #{targetUserId}
+        and readed = 0
+    </select>
+
+</mapper>

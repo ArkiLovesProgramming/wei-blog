@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--&lt;!&ndash;    配置数据库文件&ndash;&gt;-->
+    <!--    <properties resource="database.properties" />-->
+<!--    <settings>-->
+<!--        &lt;!&ndash; 打印sql日志 &ndash;&gt;-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING" />-->
+
+<!--&lt;!&ndash;        查询返回结果为空时不让它报错&ndash;&gt;-->
+<!--        <setting name="callSettersOnNulls" value="true"/>-->
+
+<!--    </settings>-->
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
+    <typeAliases>
+        <!--        配了pojo类所在的包，mapper接口的xml文件文件类型就不用带地址，直接写类名-->
+        <package name="pojo"/>
+    </typeAliases>
+
+    <mappers>
+        <mapper resource="dao/UserMapper.xml" />
+        <mapper resource="dao/ContentMapper.xml" />
+        <mapper resource="dao/TopicMapper.xml" />
+        <mapper resource="dao/NotificationMapper.xml" />
+        <mapper resource="dao/ContactMapper.xml" />
+        <mapper resource="dao/ChatMapper.xml" />
+    </mappers>
+
+
+</configuration>

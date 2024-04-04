@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--1.扫描service下的包-->
+    <context:component-scan base-package="service" />
+<!--    <context:component-scan base-package="dao" />-->
+    <!--2.将我们的所有业务类，注入到Spring，可以通过配置，或者注解实现-->
+    <bean id="UserServiceImpl" class="service.UserServiceImpl" >
+        <property name="userMapper" ref="userMapper" />
+    </bean>
+    <bean id="ContentServiceImpl" class="service.ContentServiceImpl" >
+        <property name="contentMapper" ref="contentMapper" />
+    </bean>
+    <bean id="TopicServiceImpl" class="service.TopicServiceImpl" >
+        <property name="topicMapper" ref="topicMapper" />
+    </bean>
+    <bean id="NotificationServiceImpl" class="service.NotificationServiceImpl" >
+        <property name="notificationMapper" ref="notificationMapper" />
+    </bean>
+    <bean id="ContactServiceImpl" class="service.ContactServiceImpl" >
+        <property name="contactMapper" ref="contactMapper" />
+    </bean>
+    <bean id="ChatServiceImpl" class="service.ChatServiceImpl" >
+        <property name="chatMapper" ref="chatMapper" />
+    </bean>
+
+    <!--3.声明式事务配置-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!--    4.aop事务支持-->
+</beans>

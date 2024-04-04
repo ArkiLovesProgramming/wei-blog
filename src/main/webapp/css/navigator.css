@@ -1,0 +1,321 @@
+.fake_navigator{
+	padding: 0px;
+	min-width: 80px;
+	display: inline-block;
+	float: left;
+	height: 100%;
+	/* width: 250px; */
+	/* width: 300px; */
+	background-color: white;
+	border-right: #edf0f2 solid 1px;
+}
+.navigator{
+	z-index: 1;
+	position: fixed;
+	padding: 0px;
+	min-width: 80px;
+	display: inline-block;
+	float: left;
+	height: 100%;
+	/* width: 250px; */
+	/* width: 300px; */
+	background-color: white;
+	border-right: #edf0f2 solid 1px;
+}
+.navigator .top{
+	color: white;
+}
+.navigator .top a{
+	height: 46px;
+	color: #3f9bff;
+	font-size: 30px;
+	font-weight: 900;
+	line-height: 46px;
+	margin: 0px;
+	padding: 0px 0px 0px 8px;
+}
+.menu_box{
+	background-color: #ececec;
+	width: 100%;
+}
+.menu_box a{
+	cursor: pointer;
+}
+.menu{
+	/* 	background-color: black; */
+	/* border-bottom: 1px solid silver; */
+	height: 52px;
+	margin: 5px 0px 5px 0px;
+	float: right;
+	clear: both;
+	margin-right: 15px;
+	/* border: #000000 solid 1px; */
+	border-radius: 25px;
+	padding: 14px 28px;
+	width: 180px;
+	transition: background-color 0.1s;
+	-webkit-transition: background-color 0.1s; /* Safari */
+}
+.menu:hover {
+	background-color: #edf0f2;
+}
+
+.menu img{
+	height: 24px;
+	width: 24px;
+	/* padding-bottom: 8px; */
+	vertical-align: top;
+}
+.menu>span{
+	font-weight: 350;
+	font-size: 20px;
+	line-height: 24px;
+	display: inline-block;
+	margin-left: 10px;
+}
+.menu_send{
+	background-color: #3f9bff;
+	color: white;
+	cursor: pointer;
+}
+.menu_send:hover {
+	background-color: #3787dc!important;
+	color: white;
+}
+.menu_send span{
+	font-weight: 300;
+	display: inline-block;
+	transition: margin-right 0.5s;
+}
+.menu_send span:after{
+	content: '»';
+	position: absolute;
+	transition: 0.5s;
+	opacity: 0;
+}
+.menu_send:hover span{
+	margin-right: 6px;
+}
+.menu_send:hover span:after{
+	opacity: 1;
+}
+
+.current_account{
+	/* position: relative; */
+	margin-right: 5px;
+	margin-top: 20px;
+	/* padding-top: 36px; */
+	float: right;
+	clear: both;
+	width: 180px;
+	/* background-color: #000000; */
+}
+#touxiang_box{
+	height: 60px;
+	float: right;
+	clear: both;
+	margin-right: 0px;
+	/* border: #000000 solid 1px; */
+	border-radius: 30px;
+	padding: 9px 21px 0px 21px;
+	width: 200px;
+	transition: background-color 0.1s;
+	-webkit-transition: background-color 0.1s; /* Safari */
+}
+#touxiang_box:hover {
+	background-color: #edf0f2;
+}
+#touxiang_box .account_info{
+	position: relative;
+	top: -49px;
+	left: 47px;
+	font-size: 14px;
+}
+#touxiang_box .account_info span{
+	/* CSS文字不换行，超出部分显示... */
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+#touxiang_box .account_info span:first-child{
+	font-size: 14px;
+	font-weight: 700;
+	display: block;
+}
+
+#touxiang_box .account_info span:last-child{
+	font-weight: 400;
+	color: rgb(83, 100, 113);
+	display: block;
+}
+/* 三角形 */
+.ca-triangle{
+	position: absolute;
+	/* transform: rotate(180deg); */
+	right: 260px;
+}
+.ca-triangle-icon{
+	transform: rotate(45deg);
+	position: absolute;
+	bottom: -5px;
+	height: 12px;
+	width: 12px;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 5px #b9b8bb;
+}
+.ca-triangle-icon2{
+	transform: rotate(0deg)!important;
+	bottom: 0px;
+	left: -6px;
+	width: 25px;
+	box-shadow: none;
+}
+/* 三角形 */
+.tdb-show-box{
+	display: none;
+	position: absolute;
+	z-index: 4;
+}
+.touxiang-details-box{
+	width: 300px;
+	background-color: black;
+	padding: 12px 0px;
+	box-shadow: 0px 0px 5px #b9b8bb;
+	z-index: 4;
+	border-radius: 16px;
+	background-color: white;
+}
+.touxiang-details-box .touxiang-details{
+	padding: 12px 16px;
+	height: 72px;
+	border-bottom: #F0F3F4 solid 1px;
+}
+.touxiang-details-text{
+	width: 208px;
+}
+.touxiang-details-box .touxiang-details img{
+	height: 48px;
+	width: 48px;
+	margin-right: 12px;
+	border-radius: 50%;
+}
+.touxiang-details-box .touxiang-details span{
+	/* CSS文字不换行，超出部分显示... */
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+.touxiang-details-box .touxiang-details span:first-child{
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 20px;
+	display: block;
+	margin-top: 4px;
+
+}
+.touxiang-details-box .touxiang-details span:last-child{
+	font-size: 15px;
+	font-weight: normal;
+	line-height: 20px;
+	display: block;
+}
+.tdb-item{
+	padding: 16px;
+	height: 52px;
+	font-size: 15px;
+	color: rgb(15, 20, 25);
+	font-weight: 400;
+	transition: background-color 0.15s;
+	cursor: pointer;
+}
+.tdb-item span{
+	display: block;
+	width: 100%;
+	/* CSS文字不换行，超出部分显示... */
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+.tdb-item:hover{
+	background-color: #F8F9F9;
+}
+
+
+.current_account #touxiang_box>img{
+	width: 41px;
+	height: 41px;
+	margin-bottom: 8px;
+	border-radius: 50%;
+}
+
+.notify-icon{
+	position: absolute;
+	border-radius: 50%;
+	background-color: #499BEA;
+	color: white;
+	width: 20px;
+	height: 20px;
+	font-size: 13px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	bottom: 14px;
+	left: 12px;
+	border: white solid 1px;
+}
+
+@media (min-width: 0px) and (max-width: 1200px){
+	.menu_box .menu>span{
+		display: none;
+	}
+	.menu_box .menu img{
+		/* margin-top: 13px;
+		margin-left: 15px; */
+		vertical-align: top;
+	}
+
+	.menu_box .menu{
+		height: 52px;
+		width: 52px;
+		border-radius: 50%;
+		padding: 14px;
+	}
+	.menu_send img{
+		/* margin-top: 14px!important;
+		margin-right: 14px; */
+	}
+	.navigator .top a{
+		padding-left: 106px;
+	}
+	#touxiang_box{
+		border-radius: 50%;
+		height: 60px;
+		width: 60px;
+		padding: 10px 0px 0px 10px;
+		margin-right: 5px;
+		cursor: pointer;
+	}
+	.current_account #touxiang_box .account_info{
+		display: none;
+	}
+
+
+
+	/* .touxiang-details-box{
+		left: 14px;
+	}
+	.ca-triangle{
+		left: 3px;
+	} */
+
+
+}
+
+@media (min-width: 1200px){
+	.menu_box .menu{
+		margin-right: 35px;
+	}
+	.current_account{
+		margin-right: 25px;
+	}
+}
