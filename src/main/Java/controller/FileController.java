@@ -41,26 +41,28 @@ public class FileController {
         System.out.println("第二个=>"+secondFile.isEmpty());
         System.out.println("视频是=>"+video.isEmpty());
         if (video.isEmpty()){
+            String firstfileName = new String(firstFile.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
+            String secondfileName = new String(secondFile.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
             if (!firstFile.isEmpty() && secondFile.isEmpty()){
 //        通过commonsMultipartFile的方法直接写文件
-                firstFile.transferTo(new File(picPath+"/"+firstFile.getOriginalFilename()));
-                return "uploadFile/image/"+firstFile.getOriginalFilename()+"|0";
+                firstFile.transferTo(new File(picPath+"/" + firstfileName));
+                return "uploadFile/image/"+ firstfileName +"|0";
             } else if (firstFile.isEmpty() && !secondFile.isEmpty()){
-                secondFile.transferTo(new File(picPath+"/"+secondFile.getOriginalFilename()));
-                return "uploadFile/image/"+secondFile.getOriginalFilename()+"|0";
+                secondFile.transferTo(new File(picPath+"/" + secondfileName));
+                return "uploadFile/image/"+ secondfileName +"|0";
             } else if (!firstFile.isEmpty() && !secondFile.isEmpty()){
-                firstFile.transferTo(new File(picPath+"/"+firstFile.getOriginalFilename()));
-                secondFile.transferTo(new File(picPath+"/"+secondFile.getOriginalFilename()));
-                return "uploadFile/image/"+firstFile.getOriginalFilename()+",uploadFile/image/"+secondFile.getOriginalFilename()+"|0";
+                firstFile.transferTo(new File(picPath+"/"+firstfileName));
+                secondFile.transferTo(new File(picPath+"/"+secondfileName));
+                return "uploadFile/image/"+firstfileName+",uploadFile/image/"+secondfileName+"|0";
             } else {
                 System.out.println("p1 p2都为空");
                 return "0|0";
             }
         } else {
-            video.transferTo(new File(videoPath+"/"+video.getOriginalFilename()));
-            return "0|"+"uploadFile/video/"+video.getOriginalFilename();
+            String videoName = new String(video.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
+            video.transferTo(new File(videoPath+"/" + videoName));
+            return "0|"+"uploadFile/video/"+videoName;
         }
-
     }
 
     @RequestMapping("Messages/uploadFile")

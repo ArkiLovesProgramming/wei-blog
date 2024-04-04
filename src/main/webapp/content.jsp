@@ -37,21 +37,21 @@
     <div class="fake_navigator col-2 col-lg-1 col-xl-3"></div>
     <div class="navigator col-2 col-lg-1 col-xl-3">
         <div class="top">
-            <a href="#" id="logo" class="menu">
+            <a href="<%=basePath%>Content/explore" id="logo" class="menu">
                 WEI
             </a>
         </div>
         <div class="menu_box">
             <c:if test="${not empty sessionScope.user}">
-                <a href="#" class="menu">
+                <a href="<%=basePath%>Content/getHomeContents" class="menu">
                     <img src="images/icon/home.png" />
-                    <span>内容</span>
+                    <span>Blogs</span>
                 </a>
             </c:if>
-            <div class="menu">
+            <a href="<%=basePath%>Content/explore" class="menu">
                 <img src="images/icon/explore.png" />
-                <span>探索</span>
-            </div>
+                <span>Explore</span>
+            </a>
             <c:if test="${not empty sessionScope.user}">
                 <a href="<%=basePath%>Notifications" class="menu">
                     <div class="d-inline-block position-relative" style="vertical-align: top;">
@@ -67,45 +67,45 @@
                             </div>
                         </c:if>
                     </div>
-                    <span>通知</span>
+                    <span>Notis</span>
                 </a>
             </c:if>
             <c:if test="${not empty sessionScope.user}">
-                <a class="menu">
+                <a href="<%=basePath%>Messages" class="menu">
                     <img src="images/icon/message.png" />
-                    <span>微聊</span>
+                    <span>Message</span>
                 </a>
             </c:if>
             <c:if test="${not empty sessionScope.user}">
                 <a class="menu">
                     <img src="images/icon/lists.png" />
-                    <span>好友</span>
+                    <span>Friends</span>
                 </a>
             </c:if>
 
             <c:if test="${not empty sessionScope.user}">
-                <a href="#" class="menu">
+                <a href="<%=basePath%>Topic/topics" class="menu">
                     <img src="images/icon/bookmark.png" />
-                    <span>书签</span>
+                    <span>Topics</span>
                 </a>
             </c:if>
 
             <c:if test="${not empty sessionScope.user}">
-                <a class="menu">
+                <a href="<%=basePath%>User/detailUser/${sessionScope.user.id}" class="menu">
                     <img src="images/icon/profile.png" />
-                    <span>主页</span>
+                    <span>Profile</span>
                 </a>
             </c:if>
 
             <c:if test="${not empty sessionScope.user}">
                 <a class="menu">
                     <img src="images/icon/more.png" />
-                    <span>更多</span>
+                    <span>More</span>
                 </a>
             </c:if>
 
             <c:if test="${not empty sessionScope.user}">
-                <a href="" class="menu d-block menu_send" style="text-align: center;">
+                <a href="<%=basePath%>Content/getHomeContents" class="menu d-block menu_send" style="text-align: center;">
                     <img src="images/icon/send.png" />
                     <span>WEISend</span>
                 </a>
@@ -388,9 +388,9 @@
                                 </span>
                                 <div class="rib-more">...</div>
                                 <div class="suspended_card_more shadow">
-                                    <a href=""><img src="images/icon/follow.png" ><span>关注${comIdMapUser[comment.id].name}</span></a>
-                                    <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>
-                                    <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>
+                                    <a class="disabled" href=""><img src="images/icon/follow.png" ><span>关注${requestScope.detailUser.name}</span></a>
+                                    <a class="disabled" href=""><img src="images/icon/report.png" ><span>删除内容</span></a>
+                                    <a class="disabled" href=""><img src="images/icon/report.png" ><span>举报内容</span></a>
                                 </div>
                             </div>
                             <div class="ribc-tarword">
@@ -514,9 +514,9 @@
                                             </span>
                                             <div class="rib-more">...</div>
                                             <div class="suspended_card_more shadow">
-                                                <a href=""><img src="images/icon/follow.png" ><span>关注${comIdMapUser[l2com.id].name}</span></a>
-                                                <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>
-                                                <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>
+                                                <a class="disabled" href=""><img src="images/icon/follow.png" ><span>关注${comIdMapUser[l2com.id].name}</span></a>
+                                                <a class="disabled" href=""><img src="images/icon/report.png" ><span>删除内容</span></a>
+                                                <a class="disabled" href=""><img src="images/icon/report.png" ><span>举报内容</span></a>
                                             </div>
                                         </div>
                                         <div class="ribc-tarword">
@@ -617,521 +617,6 @@
 
                 </div>
             </c:forEach>
-
-            <!-- 开始 -->
-<%--            <div class = "total-reply-item-box">--%>
-<%--                <div class="parent-rib reply-item-box d-flex flex-row border-0">--%>
-<%--                    <!-- <a class="direct-b" href="#test" data-toggle="collapse"></a> -->--%>
-<%--                    <div class="rib-left">--%>
-<%--                        <img src="./images/profile/touxiang.png" >--%>
-<%--                        <div class="line-bar-dec-t d-none">--%>
-
-<%--                        </div>--%>
-<%--                        <div class="line-bar-dec-b">--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="rib-text-box flex-fill">--%>
-<%--                        <div class="ribtb-top">--%>
-<%--                            <span><span>Mu Rui Qing🎭</span><span class="ml-1 d-inline-block">@betaSSQQ1314</span> · <span>7h</span></span>--%>
-<%--                            <div class="rib-more">...</div>--%>
-<%--                            <div class="suspended_card_more shadow">--%>
-<%--                                <a href=""><img src="images/icon/follow.png" ><span>关注Mu Rui Qing🎭</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="ribc-tarword">--%>
-<%--                            Replying to <span>@mengqidlufei</span>--%>
-<%--                        </div>--%>
-<%--                        <div class="rib-content">--%>
-<%--                            The view they are facing is a beautiful one. That’s probably why it was placed there. Outside of it being the crash site, it looks as if they are walking toward a beautiful sky--%>
-<%--                        </div>--%>
-
-<%--                        <div class="rib_bottom d-flex flex-row">--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="commentpicbox">--%>
-<%--                                    <img class="commentpic" src="images/icon/comment.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="transmitpicbox">--%>
-<%--                                    <img class="transmitpic" src="images/icon/transmit.png" >--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="likepicbox">--%>
-<%--                                    <img class="likepic" src="images/icon/like.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="forwardingpicbox">--%>
-<%--                                    <img class="forwardingpic" src="images/icon/forwarding.png">--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                    </div>--%>
-<%--                </div>--%>
-
-<%--                <div class="coc-box">--%>
-<%--                    <div class="reply-item-box d-flex flex-row border-0">--%>
-<%--                        <div class="rib-left">--%>
-<%--                            <img src="./images/profile/touxiang.png" >--%>
-<%--                            <div class="line-bar-dec-t">--%>
-
-<%--                            </div>--%>
-<%--                            <div class="line-bar-dec-b">--%>
-
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="rib-text-box flex-fill">--%>
-<%--                            <div class="ribtb-top">--%>
-<%--                                <span><span>Mu Rui Qing🎭</span><span class="ml-1 d-inline-block">@betaSSQQ1314</span> · <span>7h</span></span>--%>
-<%--                                <div class="rib-more">...</div>--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/follow.png" ><span>关注Mu Rui Qing🎭</span></a>--%>
-<%--                                    <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>--%>
-<%--                                    <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="ribc-tarword">--%>
-<%--                                Replying to <span>@mengqidlufei</span>--%>
-<%--                            </div>--%>
-<%--                            <div class="rib-content">--%>
-<%--                                The view they are facing is a beautiful one. That’s probably why it was placed there. Outside of it being the crash site, it looks as if they are walking toward a beautiful sky--%>
-<%--                            </div>--%>
-
-<%--                            <div class="rib_bottom d-flex flex-row">--%>
-<%--                                <div class="flex-fill d-flex flex-row">--%>
-<%--                                    <div class="commentpicbox">--%>
-<%--                                        <img class="commentpic" src="images/icon/comment.png" >--%>
-<%--                                    </div>--%>
-<%--                                    <div class="d-inline-block">--%>
-<%--                                        <span>2.7k</span>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                                <div class="flex-fill d-flex flex-row">--%>
-<%--                                    <div class="transmitpicbox">--%>
-<%--                                        <img class="transmitpic" src="images/icon/transmit.png" >--%>
-<%--                                    </div>--%>
-<%--                                    <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                    <div class="suspended_card_more shadow">--%>
-<%--                                        <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="d-inline-block">--%>
-<%--                                        <span>2.7k</span>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-
-<%--                                <div class="flex-fill d-flex flex-row">--%>
-<%--                                    <div class="likepicbox">--%>
-<%--                                        <img class="likepic" src="images/icon/like.png" >--%>
-<%--                                    </div>--%>
-<%--                                    <div class="d-inline-block">--%>
-<%--                                        <span>54.1k</span>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-
-<%--                                <div class="flex-fill d-flex flex-row">--%>
-<%--                                    <div class="forwardingpicbox">--%>
-<%--                                        <img class="forwardingpic" src="images/icon/forwarding.png">--%>
-<%--                                    </div>--%>
-<%--                                    <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                    <div class="suspended_card_more shadow">--%>
-<%--                                        <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="d-inline-block">--%>
-<%--                                        <span>54.1k</span>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <div id="" class="rib_showmore">--%>
-<%--                        <img src="images/icon/rib-showmore.png" >--%>
-<%--                        <span>Show more</span>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-
-<%--            <!-- 第二个test -->--%>
-
-<%--            <div class = "total-reply-item-box">--%>
-<%--                <div class="parent-rib reply-item-box d-flex flex-row border-0">--%>
-<%--                    <!-- <a class="direct-b" href="#test" data-toggle="collapse"></a> -->--%>
-<%--                    <div class="rib-left">--%>
-<%--                        <img src="./images/profile/touxiang.png" >--%>
-<%--                        <div class="line-bar-dec-t d-none">--%>
-
-<%--                        </div>--%>
-<%--                        <div class="line-bar-dec-b d-none">--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="rib-text-box flex-fill">--%>
-<%--                        <div class="ribtb-top">--%>
-<%--                            <span><span>Mu Rui Qing🎭</span><span class="ml-1 d-inline-block">@betaSSQQ1314</span> · <span>7h</span></span>--%>
-<%--                            <div class="rib-more">...</div>--%>
-<%--                            <div class="suspended_card_more shadow">--%>
-<%--                                <a href=""><img src="images/icon/follow.png" ><span>关注Mu Rui Qing🎭</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="ribc-tarword">--%>
-<%--                            Replying to <span>@mengqidlufei</span>--%>
-<%--                        </div>--%>
-<%--                        <div class="rib-content">--%>
-<%--									<span>The view they are facing is a beautiful one. That’s probably why it was placed there. Outside of it being the crash site, it looks as if they are walking toward a beautiful sky--%>
-<%--									</span>--%>
-<%--                            <div class="actual_content_picture">--%>
-<%--                                <div class="content_picture_frame" style="max-width: 100%;">--%>
-<%--                                    <img class="hpiture zoomable_pic" src="images/profile/test.jpeg" />--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-
-<%--                        <div class="rib_bottom d-flex flex-row">--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="commentpicbox">--%>
-<%--                                    <img class="commentpic" src="images/icon/comment.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="transmitpicbox">--%>
-<%--                                    <img class="transmitpic" src="images/icon/transmit.png" >--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="likepicbox">--%>
-<%--                                    <img class="likepic" src="images/icon/like.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="forwardingpicbox">--%>
-<%--                                    <img class="forwardingpic" src="images/icon/forwarding.png">--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-
-<%--            <!-- 第三个test -->--%>
-<%--            <div class = "total-reply-item-box">--%>
-<%--                <div class="parent-rib reply-item-box d-flex flex-row border-0">--%>
-<%--                    <!-- <a class="direct-b" href="#test" data-toggle="collapse"></a> -->--%>
-<%--                    <div class="rib-left">--%>
-<%--                        <img src="./images/profile/touxiang.png" >--%>
-<%--                        <div class="line-bar-dec-t d-none">--%>
-
-<%--                        </div>--%>
-<%--                        <div class="line-bar-dec-b d-none">--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="rib-text-box flex-fill">--%>
-<%--                        <div class="ribtb-top">--%>
-<%--                            <span><span>Mu Rui Qing🎭</span><span class="ml-1 d-inline-block">@betaSSQQ1314</span> · <span>7h</span></span>--%>
-<%--                            <div class="rib-more">...</div>--%>
-<%--                            <div class="suspended_card_more shadow">--%>
-<%--                                <a href=""><img src="images/icon/follow.png" ><span>关注Mu Rui Qing🎭</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="ribc-tarword">--%>
-<%--                            Replying to <span>@mengqidlufei</span>--%>
-<%--                        </div>--%>
-<%--                        <div class="rib-content">--%>
-<%--									<span>The view they are facing is a beautiful one. That’s probably why it was placed there. Outside of it being the crash site, it looks as if they are walking toward a beautiful sky--%>
-<%--									</span>--%>
-<%--                            <div class="actual_content_picture">--%>
-<%--                                <div class="content_video_frame">--%>
-<%--                                    <video style="max-width: 100%;" height="100%" controls autoplay muted loop>--%>
-<%--                                        <source src="videos/testvideo.mp4" type="video/mp4"></source>--%>
-<%--                                    </video>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-
-<%--                        <div class="rib_bottom d-flex flex-row">--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="commentpicbox">--%>
-<%--                                    <img class="commentpic" src="images/icon/comment.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="transmitpicbox">--%>
-<%--                                    <img class="transmitpic" src="images/icon/transmit.png" >--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="likepicbox">--%>
-<%--                                    <img class="likepic" src="images/icon/like.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="forwardingpicbox">--%>
-<%--                                    <img class="forwardingpic" src="images/icon/forwarding.png">--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-
-<%--            <!-- 第四个div -->--%>
-<%--            <div class = "total-reply-item-box">--%>
-<%--                <div class="parent-rib reply-item-box d-flex flex-row border-0">--%>
-<%--                    <!-- <a class="direct-b" href="#test" data-toggle="collapse"></a> -->--%>
-<%--                    <div class="rib-left">--%>
-<%--                        <img src="./images/profile/touxiang.png" >--%>
-<%--                        <div class="line-bar-dec-t d-none">--%>
-
-<%--                        </div>--%>
-<%--                        <div class="line-bar-dec-b d-none">--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="rib-text-box flex-fill">--%>
-<%--                        <div class="ribtb-top">--%>
-<%--                            <span><span>Mu Rui Qing🎭</span><span class="ml-1 d-inline-block">@betaSSQQ1314</span> · <span>7h</span></span>--%>
-<%--                            <div class="rib-more">...</div>--%>
-<%--                            <div class="suspended_card_more shadow">--%>
-<%--                                <a href=""><img src="images/icon/follow.png" ><span>关注Mu Rui Qing🎭</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="ribc-tarword">--%>
-<%--                            Replying to <span>@mengqidlufei</span>--%>
-<%--                        </div>--%>
-<%--                        <div class="rib-content">--%>
-<%--									<span>The view they are facing is a beautiful one. That’s probably why it was placed there. Outside of it being the crash site, it looks as if they are walking toward a beautiful sky--%>
-<%--									</span>--%>
-<%--                            <div class="double_pciture_frame aspectration" data-ratio="16:9">--%>
-<%--                                <div class="d-flex flex-row">--%>
-<%--                                    <div class="first_picture flex-fill">--%>
-<%--                                        <img src="images/profile/test5.jpeg" class="zoomable_pic" >--%>
-<%--                                    </div>--%>
-<%--                                    <div class="second_picture flex-fill">--%>
-<%--                                        <img src="images/profile/test6.jpeg" class="zoomable_pic">--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-
-<%--                        <div class="rib_bottom d-flex flex-row">--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="commentpicbox">--%>
-<%--                                    <img class="commentpic" src="images/icon/comment.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="transmitpicbox">--%>
-<%--                                    <img class="transmitpic" src="images/icon/transmit.png" >--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="likepicbox">--%>
-<%--                                    <img class="likepic" src="images/icon/like.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="forwardingpicbox">--%>
-<%--                                    <img class="forwardingpic" src="images/icon/forwarding.png">--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-
-<%--            <!-- 第五个测试 -->--%>
-<%--            <div class = "total-reply-item-box">--%>
-<%--                <div class="parent-rib reply-item-box d-flex flex-row border-0">--%>
-<%--                    <!-- <a class="direct-b" href="#test" data-toggle="collapse"></a> -->--%>
-<%--                    <div class="rib-left">--%>
-<%--                        <img src="./images/profile/touxiang.png" >--%>
-<%--                        <div class="line-bar-dec-t d-none">--%>
-
-<%--                        </div>--%>
-<%--                        <div class="line-bar-dec-b d-none">--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="rib-text-box flex-fill">--%>
-<%--                        <div class="ribtb-top">--%>
-<%--                            <span><span>Mu Rui Qing🎭</span><span class="ml-1 d-inline-block">@betaSSQQ1314</span> · <span>7h</span></span>--%>
-<%--                            <div class="rib-more">...</div>--%>
-<%--                            <div class="suspended_card_more shadow">--%>
-<%--                                <a href=""><img src="images/icon/follow.png" ><span>关注Mu Rui Qing🎭</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>--%>
-<%--                                <a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="ribc-tarword">--%>
-<%--                            Replying to <span>@mengqidlufei</span>--%>
-<%--                        </div>--%>
-<%--                        <div class="rib-content">--%>
-<%--									<span>The view they are facing is a beautiful one. That’s probably why it was placed there. Outside of it being the crash site, it looks as if they are walking toward a beautiful sky--%>
-<%--									</span>--%>
-<%--                            <div class="actual_content_picture">--%>
-<%--                                <div class="content_picture_frame">--%>
-<%--                                    <img class="hpiture zoomable_pic" src="images/profile/test4.jpeg" />--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-
-<%--                        <div class="rib_bottom d-flex flex-row">--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="commentpicbox">--%>
-<%--                                    <img class="commentpic" src="images/icon/comment.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="transmitpicbox">--%>
-<%--                                    <img class="transmitpic" src="images/icon/transmit.png" >--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>2.7k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="likepicbox">--%>
-<%--                                    <img class="likepic" src="images/icon/like.png" >--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="flex-fill d-flex flex-row">--%>
-<%--                                <div class="forwardingpicbox">--%>
-<%--                                    <img class="forwardingpic" src="images/icon/forwarding.png">--%>
-<%--                                </div>--%>
-<%--                                <!-- 转发suspend 要给父元素加relative -->--%>
-<%--                                <div class="suspended_card_more shadow">--%>
-<%--                                    <a href=""><img src="images/icon/transmit.png" ><span>ReWEISend</span></a>--%>
-<%--                                </div>--%>
-<%--                                <div class="d-inline-block">--%>
-<%--                                    <span>54.1k</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-
-            <!-- -- -->
         </div>
     </div>
     <!-- <div class="trends col-3 d-none d-md-block"> -->
@@ -1227,7 +712,7 @@
                             </div>
                         </c:forEach>
                         <div class=" d-flex flex-row">
-                            <a class="who_list_show_more" href="###">Show more</a>
+                            <a class="who_list_show_more disabled" href="###">Show more</a>
                         </div>
                     </div>
                 </c:if>
@@ -1241,7 +726,7 @@
                             ...
                         </div>
                         <div class="suspended_card_more shadow">
-                            <a href="###"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
+                            <a href="###" class="disabled"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
                         </div>
                         <!-- 蒙层 -->
                         <div style="z-index: 3;" class="suspend-cover"></div>
@@ -1255,7 +740,7 @@
                             ...
                         </div>
                         <div class="suspended_card_more shadow">
-                            <a href="###"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
+                            <a href="###" class="disabled"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
                         </div>
                         <!-- 蒙层 -->
                         <div style="z-index: 3;" class="suspend-cover"></div>
@@ -1269,7 +754,7 @@
                             ...
                         </div>
                         <div class="suspended_card_more shadow">
-                            <a href="###"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
+                            <a href="###" class="disabled"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
                         </div>
                         <!-- 蒙层 -->
                         <div style="z-index: 3;" class="suspend-cover"></div>
@@ -1283,7 +768,7 @@
                             ...
                         </div>
                         <div class="suspended_card_more shadow">
-                            <a href="###"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
+                            <a href="###" class="disabled"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
                         </div>
                         <!-- 蒙层 -->
                         <div style="z-index: 3;" class="suspend-cover"></div>
@@ -1297,7 +782,7 @@
                             ...
                         </div>
                         <div class="suspended_card_more shadow">
-                            <a href="###"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
+                            <a href="###" class="disabled"><img src="images/icon/cryface.png" /><span>Not interested in this</span></a>
                         </div>
                         <!-- 蒙层 -->
                         <div style="z-index: 3;" class="suspend-cover"></div>
@@ -1307,7 +792,7 @@
                         <span class="foryou_num">29.2k WEISends</span>
                     </div>
                     <div class=" d-flex flex-row">
-                        <a class="who_list_show_more" href="###">Show more</a>
+                        <a class="who_list_show_more disabled" href="###">Show more</a>
                     </div>
                 </div>
 

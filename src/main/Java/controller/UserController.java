@@ -43,8 +43,12 @@ public class UserController {
 
     private DateUtility dateUtility = new DateUtility();
 
+    @ResponseBody
     @RequestMapping("/addUser")
-    public String addUser(Model model, String name, String email, String password){
+    public String addUser(Model model, @RequestBody HashMap<String, String> map){
+        String name = map.get("name");
+        String email = map.get("email");
+        String password = map.get("password");
         RandomUtility randomUtility = new RandomUtility();
         User user = new User();
         user.setId(randomUtility.createId());
@@ -57,16 +61,20 @@ public class UserController {
         user.setLikedContentIds("");
         user.setCreatingTime(dateUtility.getDate());
         user.setFollowerNum(0);
+        user.setFollowerIds("");
         user.setFollowingNum(0);
         user.setFollowingIds("");
         user.setTopicIds("");
         user.setSignature("");
         user.setGender(-1);
+        user.setActivated(0);   //inactivated account by default
 
         try {
             userService.addUser(user);
         } catch (Exception e) {
             System.out.println("error-----"+e);
+            model.addAttribute("message","Fail to login in！");
+            return "failed";
         }
         model.addAttribute("message","立即登录！");
 
@@ -82,18 +90,35 @@ public class UserController {
             e.printStackTrace();
         }
 
+        return "succeeded";
+    }
+
+    /**
+     * @param email
+     * @param request
+     * @return
+     * after verifying the email, the account can be activated
+     */
+    @RequestMapping("/activateUser")
+    public String activateUser(String email, HttpServletRequest request){
+        User user = userService.getUserByEmail(email);
+        user.setActivated(1);
+        userService.updateUser(user);
         return "rightemail";
     }
 
     @ResponseBody
     @RequestMapping("/checkUser")
-    public User checkUser(String email, String password, HttpServletRequest request){
+    public HashMap checkUser(String email, String password, HttpServletRequest request){
         HttpSession session=request.getSession();
         User user = userService.checkUser(email,password);
         session.setAttribute("user",user);
+        HashMap map = new HashMap<>();
+        map.put("user", user);
 
-        if (user != null){
+        if (user != null && user.getActivated() != 0){
             System.out.println("验证成功！");
+            map.put("code", "1");
             //获取是否有通知
             Integer notisNum = notificationService.notisNumByTUId(user.getId());
             if (notisNum != null) {
@@ -101,9 +126,9 @@ public class UserController {
             }
         } else {
             System.out.println("验证失败！");
+            map.put("code", "0");
         }
-
-        return user;
+        return map;
     }
 
     @RequestMapping("/logout")

@@ -10,6 +10,7 @@ public interface UserMapper {
     public int addUser(User user);
     public User checkUser(@Param("email") String email,@Param("password") String password);
     public User getUserById(@Param("id")String id);
+    public User getUserByEmail(@Param("email")String email);
     public int updateUser(User user);
     public String getSField(@Param("field")String field,@Param("userId")String userId);
     public List<User> usersByIds(@Param("ids") List<String> ids,@Param("orderSql") String orderSql);

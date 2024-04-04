@@ -10,6 +10,7 @@ public interface UserService {
     public int addUser(User user);
     public User checkUser(String email,String password);
     public User getUserById(String id);
+    public User getUserByEmail(String email);
     public int updateUser(User user);
     public String getSField(String field, String userId);
     public List<User> usersByIds(List<String> ids,String orderSql);

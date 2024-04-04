@@ -15,8 +15,12 @@ body{
 }
 
 a {
-	text-decoration: none;
 	color: black;
+}
+
+a.disabled{
+	pointer-events:none;
+	cursor: pointer;
 }
 a:hover {
 	text-decoration: none;
@@ -461,5 +465,9 @@ input{
 }
 
 .zoomable_pic{
+	cursor: pointer;
+}
+
+#touxiang_box{
 	cursor: pointer;
 }

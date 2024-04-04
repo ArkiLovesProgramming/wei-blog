@@ -407,7 +407,12 @@ $(document).ready(function(){
 
 	$(".search-result-items").on("mousedown",".search-result-item",function(e) {
 		let id = $(this).children(".sri-people-id").text();
-		$(window).attr('location','User/detailUser/'+id);
+		let keyword = $(".search-result-item:first-child span:first-child").text()
+		if (id == undefined || id == ""){
+			search("Top", keyword)
+		} else {
+			$(window).attr('location','User/detailUser/'+id);
+		}
 	});
 
 	var stTimeout;

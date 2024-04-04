@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +40,26 @@ public class TopicController {
 
     @RequestMapping("/addTopic")
     @ResponseBody
+    @Transactional
     public String addTopic(){
+        String parentliststr = "Technology, cat17941903, Music, cat23985466, BusinessFinance, cat21099682, Outdoor, cat28542823," +
+                "FashionB, cat37194337, HomeFamily, cat50833112, Gaming, cat51586570, Careers, cat53933042, Entertainment, cat54908091";
+        String[] parentArray = parentliststr.split(",");
+        for (int i = 0; i < parentArray.length; i += 2){
+            Topic topic = new Topic();
+            topic.setId(parentArray[i+1].substring(1));
+            topic.setName(parentArray[i]);
+            topic.setIsParent(1);
+            topic.setParentId("");
+            topic.setUserInTopicIds("");
+            topic.setUserInTopicNum(0);
+            topic.setContentNum(0);
+            topic.setContentIds("");
+            if (topicService.addTopic(topic) != 1){
+                System.out.println("error: father topic fails to insert");
+            }
+        }
+
         String Technology = "cat17941903,Elon Musk,Apple,Android,Tech news,Machine learning,Artificial intelligence,Computer programming,YouTube,Open source";
         String Music = "cat23985466,Rap,Drake,K-pop,J. Cole,R&B & soul,Rock,J-pop,Hip hop,Music news,Pop,Jay Z,Classical music";
         String BusinessFinance = "cat21099682,Business news,Marketing,Investing,Small business,Accounting,Advertising,Tesla Motors,Financial";
@@ -143,6 +163,10 @@ public class TopicController {
         return parentTopics;
     }
 
+    /**
+     * @param request
+     * @return topicsParentList, topicsList
+     */
     @RequestMapping("/topics")
     public String topics(HttpServletRequest request){
         HttpSession session = request.getSession();

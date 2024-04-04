@@ -127,7 +127,7 @@ function getContentHtml(content,user) {
         "                        </div>\n" +
         "                        <!-- 转发suspend 要给父元素加relative -->\n" +
         "                        <div class=\"suspended_card_more shadow\">\n" +
-        "                            <a href=\"\"><img src=\"images/icon/transmit.png\" ><span>ReWEISend</span></a>\n" +
+        "                            <a class='disabled' href=\"\"><img src=\"images/icon/transmit.png\" ><span>ReWEISend</span></a>\n" +
         "                        </div>\n" +
         "                        <div class=\"d-inline-block\">\n" +
         "                            <span>"+content.transmitNum+"</span>\n" +
@@ -149,7 +149,7 @@ function getContentHtml(content,user) {
         "                        </div>\n" +
         "                        <!-- 转发suspend 要给父元素加relative -->\n" +
         "                        <div class=\"suspended_card_more shadow\">\n" +
-        "                            <a href=\"\"><img src=\"images/icon/transmit.png\" ><span>ReWEISend</span></a>\n" +
+        "                            <a class='disabled' href=\"\"><img src=\"images/icon/transmit.png\" ><span>ReWEISend</span></a>\n" +
         "                        </div>\n" +
         "                        <div class=\"d-inline-block\">\n" +
         "                            <span>"+content.bookmarkNum+"</span>\n" +

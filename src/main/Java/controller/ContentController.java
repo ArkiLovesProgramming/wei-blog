@@ -35,6 +35,12 @@ public class ContentController {
     @Qualifier("TopicServiceImpl")//指定service里定义的bean
     private TopicService topicService;
 
+    /**
+     *
+     * @param content
+     * @return
+     * 上传博客内容
+     */
     @RequestMapping(value = "/sendContent",method = RequestMethod.POST)
     @ResponseBody
     public Content sendContent(@RequestBody(required = false) Content content){
@@ -398,7 +404,9 @@ public class ContentController {
                 }
                 topicIdsStr = topicIdsStr + ","+pt.getId();
             }
-            topicIdsStr = topicIdsStr.substring(1);
+            if (!topicIdsStr.equals("")){
+                topicIdsStr = topicIdsStr.substring(1);
+            }
         }
         List<String> topicIds = new ArrayList<>(Arrays.asList(topicIdsStr.split(",")));
         List<Topic> topics = new ArrayList<>();

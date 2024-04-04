@@ -107,11 +107,30 @@ $(document).ready(function(){
 				name:name,email:email,password:password
 			},function (data,status){
 				if (status == "success"){
-					$(".register-box .lb-alert-area").show();
-			        $(".register-box .lb-form-input").hide();
-			        $(".register-box .lb-buttons").hide();
 			        // 加了函数节流的myAlert,还没有推广
 			        lrThrottle(myAlert,"Please finish registration through Email!",3);
+
+					$.ajax({
+						url: "User/addUser",
+						type: "POST",
+						contentType: "application/json",
+						data: JSON.stringify({
+							name: name,
+							email: email,
+							password: password
+						}),
+						success: function(data, status) {
+							if (status === "success") {
+								$(".register-box .lb-alert-area").show();
+								$(".register-box .lb-form-input").hide();
+								$(".register-box .lb-buttons").hide();
+								const timer = setInterval(()=>{
+									$(window).attr('location','login.jsp');
+									clearTimeout(timer);
+								}, 3);
+							}
+						}
+					});
 				}
 			});
 		
@@ -164,8 +183,7 @@ $(document).ready(function(){
 			$.post("User/checkUser",{
 				email:email,password:password
 			},function (data,status){
-				console.log(data);
-				if (status == "success" && data != ""){
+				if (status == "success" && data.code != "0"){
 					$(".login-box .lb-alert-area").show();
 					var dom =$(".login-box");
 					var text = "Login successfully!";

@@ -44,20 +44,20 @@
 	<div class="fake_navigator col-2 col-lg-1 col-xl-3"></div>
 	<div class="navigator col-2 col-lg-1 col-xl-3">
 		<div class="top">
-			<a href="#" id="logo" class="menu">
+			<a href="<%=basePath%>Content/explore" id="logo" class="menu">
 				WEI
 			</a>
 		</div>
 		<div class="menu_box">
 			<c:if test="${not empty sessionScope.user}">
-			<a href="<%=basePath%>Content/getHomeContents" class="menu">
-				<img src="images/icon/home.png" />
-				<span>内容</span>
-			</a>
+				<a href="<%=basePath%>Content/getHomeContents" class="menu">
+					<img src="images/icon/home.png" />
+					<span>Blogs</span>
+				</a>
 			</c:if>
 			<a href="<%=basePath%>Content/explore" class="menu">
 				<img src="images/icon/explore.png" />
-				<span>探索</span>
+				<span>Explore</span>
 			</a>
 			<c:if test="${not empty sessionScope.user}">
 				<a href="<%=basePath%>Notifications" class="menu">
@@ -74,45 +74,45 @@
 							</div>
 						</c:if>
 					</div>
-					<span>通知</span>
+					<span>Notis</span>
 				</a>
 			</c:if>
 			<c:if test="${not empty sessionScope.user}">
 				<a href="<%=basePath%>Messages" class="menu">
 					<img src="images/icon/message.png" />
-					<span>微聊</span>
+					<span>Message</span>
 				</a>
 			</c:if>
 			<c:if test="${not empty sessionScope.user}">
 				<a class="menu">
 					<img src="images/icon/lists.png" />
-					<span>好友</span>
+					<span>Friends</span>
 				</a>
 			</c:if>
 
 			<c:if test="${not empty sessionScope.user}">
-				<a href="#" class="menu">
+				<a href="<%=basePath%>Topic/topics" class="menu">
 					<img src="images/icon/bookmark.png" />
-					<span>书签</span>
+					<span>Topics</span>
 				</a>
 			</c:if>
 
 			<c:if test="${not empty sessionScope.user}">
 				<a href="<%=basePath%>User/detailUser/${sessionScope.user.id}" class="menu">
 					<img src="images/icon/profile.png" />
-					<span>主页</span>
+					<span>Profile</span>
 				</a>
 			</c:if>
 
 			<c:if test="${not empty sessionScope.user}">
 				<a class="menu">
 					<img src="images/icon/more.png" />
-					<span>更多</span>
+					<span>More</span>
 				</a>
 			</c:if>
 
 			<c:if test="${not empty sessionScope.user}">
-				<a href="" class="menu d-block menu_send" style="text-align: center;">
+				<a href="<%=basePath%>Content/getHomeContents" class="menu d-block menu_send" style="text-align: center;">
 					<img src="images/icon/send.png" />
 					<span>WEISend</span>
 				</a>
@@ -262,7 +262,7 @@
 					<span class="foryou_num">29.2k WEISends</span>
 				</div>
 				<div class=" d-flex flex-row">
-					<a class="who_list_show_more" href="###">Show more</a>
+					<a class="who_list_show_more disabled" href="###">Show more</a>
 				</div>
 			</div>
 
@@ -298,9 +298,9 @@
 									</span></span>
 										<div class="content_card_more">...</div>
 										<div class="suspended_card_more shadow">
-											<a href=""><img src="images/icon/follow.png" ><span>关注${requestScope.expConIdMapUser[content.id].name}</span></a>
-											<a href=""><img src="images/icon/report.png" ><span>删除内容</span></a>
-											<a href=""><img src="images/icon/report.png" ><span>举报内容</span></a>
+											<a class="disabled" href=""><img src="images/icon/follow.png" ><span>关注${requestScope.detailUser.name}</span></a>
+											<a class="disabled" href=""><img src="images/icon/report.png" ><span>删除内容</span></a>
+											<a class="disabled" href=""><img src="images/icon/report.png" ><span>举报内容</span></a>
 										</div>
 									</div>
 									<div class="actual_content">
@@ -623,7 +623,7 @@
 							</div>
 						</c:forEach>
 						<div class=" d-flex flex-row">
-							<a class="who_list_show_more" href="###">Show more</a>
+							<a class="who_list_show_more disabled" href="###">Show more</a>
 						</div>
 					</div>
 				</c:if>

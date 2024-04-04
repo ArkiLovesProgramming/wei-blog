@@ -33,5 +33,6 @@ public class User {
     private String likedContentIds;
     private String bookmarkContentIds;
     private String creatingTime;
+    private Integer activated;
 
 }
