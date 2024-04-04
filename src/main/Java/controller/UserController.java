@@ -44,7 +44,6 @@ public class UserController {
     private DateUtility dateUtility = new DateUtility();
 
     private RandomUtility randomUtility = new RandomUtility();
-
     @ResponseBody
     @RequestMapping("/addUser")
     public HashMap addUser(Model model, @RequestBody HashMap<String, String> map){
@@ -97,7 +96,6 @@ public class UserController {
         result.put("code", 1);
         result.put("emailtoken", user.getActivated());
         return result;
-
     }
 
     /**
