@@ -4,7 +4,7 @@ This is a product-level responsive comprehensive social blog platform using SSM 
 
 ## Testing account
 
-Website link for testing: [Weiblog:](http://weiblog.arkilovesprogramming.com)
+Website link for testing: [Weiblog](http://weiblog.arkilovesprogramming.com)
 
 Bellowing is a account for testing (Please only use it for friendly testing)
 
