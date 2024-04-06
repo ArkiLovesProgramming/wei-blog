@@ -4,7 +4,9 @@ This is a product-level responsive comprehensive social blog platform using SSM 
 
 ## Testing account
 Bellowing is a account for testing (Please only use it for friendly testing)
+
 **username**: test@gmail.com
+
 **password**: test
 
 ## Tech stacks
