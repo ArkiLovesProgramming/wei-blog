@@ -78,7 +78,9 @@ public class MessageController {
                 contacts.add(contact);
                 session.setAttribute("contacts",contacts);
                 Map<String, Object> ctactIdMapUser = (Map<String, Object>) session.getAttribute("ctactIdMapUser");
-                ctactIdMapUser.put(contact.getId(),userService.getUserById(targetUserId));
+                User targetUser = userService.getUserById(targetUserId);
+                targetUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(targetUser.getProfilePicUrl()));
+                ctactIdMapUser.put(contact.getId(), targetUser);
                 session.setAttribute("ctactIdMapUser",ctactIdMapUser);
             } catch (Exception e){
                 e.printStackTrace();
@@ -114,6 +116,7 @@ public class MessageController {
             String contactIds = contact.getContactIds();
             String targetUserId = contactIds.replace(user.getId(),"").replace(",","");
             User targetUser = userService.getUserById(targetUserId);
+            targetUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(targetUser.getProfilePicUrl()));
             ctactIdMapUser.put(contact.getId(),targetUser);
 //            获取lastContent的信息
             Chat lastChat = chatService.lastChatInfo(contact.getId());
@@ -162,6 +165,7 @@ public class MessageController {
                 String contactIds = contact.getContactIds();
                 String targetUserId = contactIds.replace(user.getId(),"").replace(",","");
                 User targetUser = userService.getUserById(targetUserId);
+                targetUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(targetUser.getProfilePicUrl()));
                 ctactIdMapUser.put(contact.getId(),targetUser);
 //            获取lastContent的信息
                 Chat lastChat = chatService.lastChatInfo(contact.getId());
@@ -201,6 +205,7 @@ public class MessageController {
         session.setAttribute("otherMsgsNum",otherMsgsNum);
         request.setAttribute("chats",chats);
         User targetUser = userService.getUserById(otherId);
+        targetUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(targetUser.getProfilePicUrl()));
         request.setAttribute("chatTargetUser",targetUser);
         request.setAttribute("currentContactId",contactId);
         session.setAttribute("hasChatWithUId",otherId);

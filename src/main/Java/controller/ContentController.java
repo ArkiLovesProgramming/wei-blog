@@ -1,5 +1,6 @@
 package controller;
 
+import config.S3ClientGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -150,15 +151,19 @@ public class ContentController {
         }
         List<Content> contents = new ArrayList<>();
         contents = contentService.conByAuthIds(followingIds,page);
-//        for (Content content : contents){
-//            System.out.println(content.getReleasingTime());
-//        }
-        session.setAttribute("homeContents",contents);
         Map<String, Object> conIdMapUser = new HashMap<>();
         for (Content content : contents) {
+            if (!content.getVideoURL().equals("0")) {
+                content.setVideoURL(S3ClientGetter.getS3PresignedUrl(content.getVideoURL()));
+            }
+            if (!content.getPictureURL().equals("0")) {
+                content.setPictureURL(S3ClientGetter.getS3PresignedUrl(content.getPictureURL()));
+            }
             User thisUser = userService.getUserById(content.getAuthorId());
+            thisUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getProfilePicUrl()));
             conIdMapUser.put(content.getId(),thisUser);
         }
+        session.setAttribute("homeContents",contents);
         session.setAttribute("conIdMapUser",conIdMapUser);
 
         return "home";
@@ -183,7 +188,14 @@ public class ContentController {
         contents = contentService.conByAuthIds(followingIds,page);
         Map<String, Object> conIdMapUser = new HashMap<>();
         for (Content content : contents) {
+            if (!content.getVideoURL().equals("0")) {
+                content.setVideoURL(S3ClientGetter.getS3PresignedUrl(content.getVideoURL()));
+            }
+            if (!content.getPictureURL().equals("0")) {
+                content.setPictureURL(S3ClientGetter.getS3PresignedUrl(content.getPictureURL()));
+            }
             User thisUser = userService.getUserById(content.getAuthorId());
+            thisUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getProfilePicUrl()));
             conIdMapUser.put(content.getId(),thisUser);
         }
         Map<String, Object> map = new HashMap<>();
@@ -211,6 +223,7 @@ public class ContentController {
         try {
             userService.updateUser(user);
             User currentUser = userService.getUserById(userId);
+            currentUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(currentUser.getProfilePicUrl()));
             session.setAttribute("user",currentUser);
         } catch (Exception e) {
             e.printStackTrace();
@@ -277,6 +290,7 @@ public class ContentController {
         try {
             userService.updateUser(user);
             User currentUser = userService.getUserById(userId);
+            currentUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(currentUser.getProfilePicUrl()));
             session.setAttribute("user",currentUser);
         } catch (Exception e) {
             e.printStackTrace();
@@ -349,6 +363,7 @@ public class ContentController {
         session.setAttribute("detailContent",thisContent);//session: detailContent
         Map<String, Object> comIdMapUser = new HashMap<>();//评论内容id对于相应user，包括当前内容的user
         Map<String, List<Content>> comIdMapChildCom = new HashMap<>();//评论内容id对于相应子评论list
+        thisUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getProfilePicUrl()));
         comIdMapUser.put(contentId,thisUser);
         if (!thisContent.getLevel().equals("0")){//放入父内容的信息
             for (int i = 0;i<5;i++){
@@ -356,6 +371,7 @@ public class ContentController {
             }
             Content pC = (Content) contentService.conById(thisContent.getParentId());
             User parentContentAuthor = userService.getUserById(pC.getAuthorId());
+            parentContentAuthor.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(parentContentAuthor.getProfilePicUrl()));
             comIdMapUser.put(thisContent.getParentId(),parentContentAuthor);
         }
         List<Content> childContents = contentService.getChildCon(contentId,String.valueOf(childLevel));
@@ -369,11 +385,13 @@ public class ContentController {
             session.setAttribute("comments",childContents);
             for (Content childContent : childContents) {
                 User author = userService.getUserById(childContent.getAuthorId());
+                author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                 comIdMapUser.put(childContent.getId(),author);
                 List<Content> level2coms = contentService.getChildCon(childContent.getId(),String.valueOf(childLevel));
                 if (level2coms.size() > 0){
                     for (Content level2com : level2coms) {
                         User level2author = userService.getUserById(level2com.getAuthorId());
+                        level2author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(level2author.getProfilePicUrl()));
                         comIdMapUser.put(level2com.getId(),level2author);
                     }
                     comIdMapChildCom.put(childContent.getId(),level2coms);
@@ -444,6 +462,9 @@ public class ContentController {
 //        who to follow
         Page page1 = new Page(); page1.setPageSize(3);
         List<User> wtfUsers = userService.whoToFollower(user.getId(),page1);
+        for (User whoto_user : wtfUsers) {
+            whoto_user.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(whoto_user.getProfilePicUrl()));
+        }
         session.setAttribute("wtfUsers",wtfUsers);
 
         request.setAttribute("expTopics",topics);

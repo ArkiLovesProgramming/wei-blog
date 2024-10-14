@@ -35,7 +35,7 @@ public class S3ClientGetter {
 
 
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMillis(1000L * 60 * 60 * 24))  // The URL will expire in 10 minutes.
+                .signatureDuration(Duration.ofMillis(1000L * 60 * 60 * 1))  // The URL will expire in 10 minutes.
                 .getObjectRequest(objectRequest)
                 .build();
 
@@ -45,7 +45,7 @@ public class S3ClientGetter {
         URL url = presignedRequest.url();
 
         // 打印预签名 URL
-        System.out.println("Pre-Signed URL: " + url.toString());
+//        System.out.println("Pre-Signed URL: " + url.toString());
         return url.toString();
     }
 

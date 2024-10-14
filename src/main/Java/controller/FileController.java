@@ -34,46 +34,61 @@ public class FileController {
     @ResponseBody
     public String uploadFile(@RequestParam("firstFile")CommonsMultipartFile firstFile,@RequestParam("secondFile")CommonsMultipartFile secondFile,
                              @RequestParam("video")CommonsMultipartFile video,HttpServletRequest request) throws IOException {
-        String picPath = request.getServletContext().getRealPath("/uploadFile/image");
-//        如果路径不存在，创建一个
-        File picP = new File(picPath);
-        if (!picP.exists()){
-            picP.mkdirs();
-        }
-        String videoPath = request.getServletContext().getRealPath("/uploadFile/video");
-//        如果路径不存在，创建一个
-        File vidP = new File(videoPath);
-        if (!vidP.exists()){
-            vidP.mkdirs();
-        }
 
-        System.out.println("上传图片保存地址=>"+picP);
-        System.out.println("上传视频保存地址=>"+vidP);
-        System.out.println("第一个=>"+firstFile.isEmpty());
-        System.out.println("第二个=>"+secondFile.isEmpty());
-        System.out.println("视频是=>"+video.isEmpty());
+//        System.out.println("上传图片保存地址=>"+picP);
+//        System.out.println("上传视频保存地址=>"+vidP);
+//        System.out.println("第一个=>"+firstFile.isEmpty());
+//        System.out.println("第二个=>"+secondFile.isEmpty());
+//        System.out.println("视频是=>"+video.isEmpty());
         if (video.isEmpty()){
             String firstfileName = new String(firstFile.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
             String secondfileName = new String(secondFile.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
+            firstfileName = addTimestamp(firstfileName);
+            secondfileName = addTimestamp(secondfileName);
             if (!firstFile.isEmpty() && secondFile.isEmpty()){
-//        通过commonsMultipartFile的方法直接写文件
-                firstFile.transferTo(new File(picPath+"/" + firstfileName));
-                return "uploadFile/image/"+ firstfileName +"|0";
+                PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                        .bucket(S3ClientGetter.bucketName)
+                        .key("contents/image/" + firstfileName)
+                        .build();
+                s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(firstFile)));
+                String url = "contents/image/" + firstfileName;
+                return url +"|0";
             } else if (firstFile.isEmpty() && !secondFile.isEmpty()){
-                secondFile.transferTo(new File(picPath+"/" + secondfileName));
-                return "uploadFile/image/"+ secondfileName +"|0";
+                PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                        .bucket(S3ClientGetter.bucketName)
+                        .key("contents/image/" + secondfileName)
+                        .build();
+                s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(secondFile)));
+                String url = "contents/image/" + secondfileName;
+                return url +"|0";
             } else if (!firstFile.isEmpty() && !secondFile.isEmpty()){
-                firstFile.transferTo(new File(picPath+"/"+firstfileName));
-                secondFile.transferTo(new File(picPath+"/"+secondfileName));
-                return "uploadFile/image/"+firstfileName+",uploadFile/image/"+secondfileName+"|0";
+                PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                        .bucket(S3ClientGetter.bucketName)
+                        .key("contents/image/" + firstfileName)
+                        .build();
+                s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(firstFile)));
+                String url = "contents/image/" + firstfileName;
+                PutObjectRequest putObjectRequest2 = PutObjectRequest.builder()
+                        .bucket(S3ClientGetter.bucketName)
+                        .key("contents/image/" + secondfileName)
+                        .build();
+                s3Client.putObject(putObjectRequest2, RequestBody.fromFile(convertMultiPartToFile(secondFile)));
+                String url2 = "contents/image/" + secondfileName;
+                return url + "," + url2 + "|0";
             } else {
                 System.out.println("p1 p2都为空");
                 return "0|0";
             }
         } else {
             String videoName = new String(video.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
-            video.transferTo(new File(videoPath+"/" + videoName));
-            return "0|"+"uploadFile/video/"+videoName;
+            videoName = addTimestamp(videoName);
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(S3ClientGetter.bucketName)
+                    .key("contents/video/" + videoName)
+                    .build();
+            s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(video)));
+            String url = "contents/video/" + videoName;
+            return "0|" + url;
         }
     }
 
@@ -155,17 +170,41 @@ public class FileController {
             picP.mkdirs();
         }
         if (!bgFile.isEmpty() && pfFile.isEmpty()){
-            bgFile.transferTo(new File(picPath+"/"+bgFile.getOriginalFilename()));
-            return "uploadFile/image/"+bgFile.getOriginalFilename() + "," + "0";
+            String bgFileName = bgFile.getOriginalFilename();
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(S3ClientGetter.bucketName)
+                    .key("users/image/" + bgFileName)
+                    .build();
+            s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(bgFile)));
+            String url = "users/image/" + bgFileName;
+            return url + "," + "0";
         }
         else if (!pfFile.isEmpty() && bgFile.isEmpty()){
-            pfFile.transferTo(new File(picPath+"/"+pfFile.getOriginalFilename()));
-            return "0,uploadFile/image/"+pfFile.getOriginalFilename();
+            String pfFileName = pfFile.getOriginalFilename();
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(S3ClientGetter.bucketName)
+                    .key("users/image/" + pfFileName)
+                    .build();
+            s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(pfFile)));
+            String url = "users/image/" + pfFileName;
+            return "0," + url;
         }
         else if (!pfFile.isEmpty() && !bgFile.isEmpty()){
-            bgFile.transferTo(new File(picPath+"/"+bgFile.getOriginalFilename()));
-            pfFile.transferTo(new File(picPath+"/"+pfFile.getOriginalFilename()));
-            return "0,uploadFile/image/"+pfFile.getOriginalFilename();
+            String bgFileName = bgFile.getOriginalFilename();
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(S3ClientGetter.bucketName)
+                    .key("users/image/" + bgFileName)
+                    .build();
+            s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(bgFile)));
+            String url = "users/image/" + bgFileName;
+            String pfFileName = pfFile.getOriginalFilename();
+            PutObjectRequest putObjectRequest2 = PutObjectRequest.builder()
+                    .bucket(S3ClientGetter.bucketName)
+                    .key("users/image/" + pfFileName)
+                    .build();
+            s3Client.putObject(putObjectRequest2, RequestBody.fromFile(convertMultiPartToFile(pfFile)));
+            String url2 = "users/image/" + pfFileName;
+            return "0," + url2;
         }
         else {
             return "0,0";
@@ -179,28 +218,35 @@ public class FileController {
 
         System.out.println("到了！");
         Decoder decoder = Base64.getDecoder();
-        // 去掉base64编码的头部 如："data:image/jpeg;base64," 如果不去，转换的图片不可以查看
+
+        // 去掉base64编码的头部
         file = file.substring(23);
-        //解码
+
+        // 解码 base64 为字节数组
         byte[] imgByte = decoder.decode(file);
 
         String fileName = "";
         try {
-            String picPath = request.getServletContext().getRealPath("/uploadFile/image");
-//        如果路径不存在，创建一个
-            File picP = new File(picPath);
-            if (!picP.exists()){
-                picP.mkdirs();
-            }
-            fileName = getFileName();
-            String resultUrl = picPath + "/" + fileName;
-            FileOutputStream out = new FileOutputStream(resultUrl); // 输出文件路径
-            out.write(imgByte);
-            out.close();
+            // 生成唯一的文件名
+            fileName = getFileName() + ".png"; // 可以根据文件类型动态调整扩展名
+
+            // 构建 S3 上传请求
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(S3ClientGetter.bucketName) // 替换为你的 S3 存储桶名称
+                    .key("users/image/" + fileName)    // S3 上的文件路径
+                    .build();
+
+            // 将字节数组直接上传到 S3
+            s3Client.putObject(putObjectRequest, RequestBody.fromBytes(imgByte));
+
         } catch (Exception e) {
             e.printStackTrace();
+            return "{\"error\":\"上传失败\"}";
         }
-        return "{\"url\":\""+"uploadFile/image/"+fileName+"\"}";
+
+        // 返回文件的 S3 URL
+        String s3Url = "users/image/" + fileName;
+        return "{\"url\":\"" + s3Url + "\"}";
     }
 
     private String getFileName() {

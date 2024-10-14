@@ -1012,8 +1012,8 @@
             <input id="pe-profilePicUrl-input" type="file" name="profilePicUrl" class="d-none" accept="image/*">
         </form>
 <%--        接受cropper裁剪完的图片地址--%>
-        <span id="realBgPicUrl"></span>
-        <span id="realPfPicUrl"></span>
+        <span style="position: absolute; visibility: hidden" id="realBgPicUrl"></span>
+        <span style="position: absolute; visibility: hidden"  id="realPfPicUrl"></span>
         <div class="pea-info-input-area">
             <c:if test="${sessionScope.user.name == ''}">
                 <div class="piia-item piia-name">
