@@ -20,6 +20,7 @@ public class DatasourceConfig {
     private String url;
     private String driver;
     private String secretID;
+    private String password;
 
     public DatasourceConfig() throws IOException {
         Properties properties = new Properties();
@@ -30,6 +31,7 @@ public class DatasourceConfig {
         this.url = properties.getProperty("jdbc.url");
         this.driver = properties.getProperty("jdbc.driver");
         this.secretID = properties.getProperty("jdbc.secretID");
+        this.password = properties.getProperty("jdbc.password");
     }
 
     @Bean
@@ -39,6 +41,7 @@ public class DatasourceConfig {
         dataSource.setJdbcUrl(url);
         dataSource.setUser(secretID);
         dataSource.setDriverClass(driver);
+        dataSource.setPassword(password);
         return dataSource;
     }
 }

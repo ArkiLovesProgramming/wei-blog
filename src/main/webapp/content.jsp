@@ -273,7 +273,7 @@
                         <div class="cancel-upload-file">
                             ×
                         </div>
-                        <img class="single-ul-pic" src="images/profile/test3.jpeg" >
+                        <img class="single-ul-pic" src="images/profile/hp.png" >
                     </div>
                 </div>
 

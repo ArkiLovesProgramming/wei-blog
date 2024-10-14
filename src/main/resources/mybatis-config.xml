@@ -13,10 +13,10 @@
 <!--        <setting name="callSettersOnNulls" value="true"/>-->
 
 <!--    </settings>-->
-    <settings>
-        <!-- 打印查询语句 -->
-        <setting name="logImpl" value="STDOUT_LOGGING" />
-    </settings>
+<!--    <settings>-->
+<!--        &lt;!&ndash; 打印查询语句 &ndash;&gt;-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING" />-->
+<!--    </settings>-->
 
     <typeAliases>
         <!--        配了pojo类所在的包，mapper接口的xml文件文件类型就不用带地址，直接写类名-->

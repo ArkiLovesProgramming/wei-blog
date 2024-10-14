@@ -99,7 +99,7 @@ function getMyDate(ds){
 
 function getContentHtml(content,user) {
     if (user.profilePicUrl == ""){
-        user.profilePicUrl = "images/icon/touxiang.png";
+        user.profilePicUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s";
     }
 
     let rt2 = getMyDate(content.releasingTime);
