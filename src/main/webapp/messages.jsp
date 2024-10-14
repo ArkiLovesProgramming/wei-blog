@@ -397,7 +397,7 @@ Search for people and groups"/>
                             ×
                         </div>
                         <video height="100%" controls autoplay muted loop>
-                            <source src="videos/testvideo3.mp4" type="video/mp4"></source>
+                            <source src="#" type="video/mp4"></source>
                         </video>
                     </div>
                 </div>

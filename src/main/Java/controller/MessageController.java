@@ -1,6 +1,7 @@
 package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import config.S3ClientGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -185,6 +186,13 @@ public class MessageController {
         List<Chat> chats = chatService.chatsByCtactId(contactId);
         int otherMsgsNum = 0;
         for (Chat chat : chats) {
+            System.out.println(chat.toString());
+            if (!chat.getVideoURL().equals("0")) {
+                chat.setVideoURL(S3ClientGetter.getS3PresignedUrl(chat.getVideoURL()));
+            }
+            if (!chat.getPictureURL().equals("0")) {
+                chat.setPictureURL(S3ClientGetter.getS3PresignedUrl(chat.getPictureURL()));
+            }
             if (chat.getReceiverId().equals(user.getId())){
                 otherMsgsNum++;
             }

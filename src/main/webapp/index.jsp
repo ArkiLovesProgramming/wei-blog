@@ -827,7 +827,7 @@
                     <div class="cancel-upload-file">
                         ×
                     </div>
-                    <img class="single-ul-pic" src="images/profile/test3.jpeg" >
+                    <img class="single-ul-pic" src="images/profile/bg.png" >
                 </div>
             </div>
 
@@ -838,14 +838,14 @@
                             <div class="cancel-upload-file">
                                 ×
                             </div>
-                            <img class="double-ul-picf" src="images/profile/test.jpeg" >
+                            <img class="double-ul-picf" src="images/profile/bg.png" >
                         </div>
 
                         <div class="drp-item"style="margin-left: 12px;">
                             <div class="cancel-upload-file">
                                 ×
                             </div>
-                            <img class="double-ul-pics" src="images/profile/test3.jpeg" >
+                            <img class="double-ul-pics" src="images/profile/bg.png" >
                         </div>
                     </div>
                 </div>
@@ -1088,7 +1088,7 @@
         </div>
         <div class="operation-area">
             <div id="imgBox">
-                <img src="images/profile/test.jpeg" alt="" id="photo">
+                <img src="images/profile/hp.png" alt="" id="photo">
             </div>
         </div>
         <div class="pea-bottom-funs">

@@ -1,10 +1,19 @@
 package controller;
 
+import java.security.Key;
 import java.util.Base64.Decoder;
+
+import config.S3ClientGetter;
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.Bucket;
+import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -17,6 +26,9 @@ import java.util.Date;
 @Controller
 @RequestMapping("/File")
 public class FileController {
+
+    S3Client s3Client = S3ClientGetter.s3Client();
+
 
     @RequestMapping("/uploadFile")
     @ResponseBody
@@ -65,10 +77,16 @@ public class FileController {
         }
     }
 
-    @RequestMapping("Messages/uploadFile")
+    @GetMapping("Messages/presignedUrl")
+    @ResponseBody
+    public String getPresignedUrl(@RequestParam("key") String key) {
+        String presigned_url = S3ClientGetter.getS3PresignedUrl(key);
+        return presigned_url;
+    }
+
+    @PostMapping("Messages/uploadFile")
     @ResponseBody
     public String uploadFile2(@RequestParam("msgFile") CommonsMultipartFile msgFile,HttpServletRequest request) throws IOException {
-        System.out.println(msgFile.getContentType());
         String mediaType = msgFile.getContentType();
         Boolean isImage;
         if (mediaType.startsWith("image/")){
@@ -78,28 +96,53 @@ public class FileController {
         }
         Boolean isVideo = !isImage;
 
-        String picPath = request.getServletContext().getRealPath("/uploadFile/image");
-//        如果路径不存在，创建一个
-        File picP = new File(picPath);
-        if (!picP.exists()){
-            picP.mkdirs();
-        }
-        String videoPath = request.getServletContext().getRealPath("/uploadFile/video");
-//        如果路径不存在，创建一个
-        File vidP = new File(videoPath);
-        if (!vidP.exists()){
-            vidP.mkdirs();
-        }
         if (!msgFile.isEmpty()){
+            String filename = addTimestamp(msgFile.getOriginalFilename());
             if (isImage){
-                msgFile.transferTo(new File(picPath+"/"+msgFile.getOriginalFilename()));
-                return "uploadFile/image/"+msgFile.getOriginalFilename();
+                PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                        .bucket(S3ClientGetter.bucketName)
+                        .key("messages/image/" + filename)
+                        .build();
+                s3Client.putObject(putObjectRequest, RequestBody.fromFile(convertMultiPartToFile(msgFile)));
+                String url = "messages/image/" + filename;
+                return url;
             } else if (isVideo){
-                msgFile.transferTo(new File(videoPath+"/"+msgFile.getOriginalFilename()));
-                return "uploadFile/video/"+msgFile.getOriginalFilename();
+                PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                        .bucket(S3ClientGetter.bucketName)
+                        .key("messages/video/" + filename)
+                        .build();
+                String url = "messages/video/" + filename;
+                return url;
             }
         }
         return "error";
+    }
+
+    // 在文件名后添加时间戳
+    public static String addTimestamp(String filename) {
+        // 提取文件扩展名
+        String extension = "";
+        int dotIndex = filename.lastIndexOf(".");
+        if (dotIndex > 0 && dotIndex < filename.length() - 1) {
+            extension = filename.substring(dotIndex);
+            filename = filename.substring(0, dotIndex); // 去掉扩展名的部分
+        }
+
+        // 生成当前时间的时间戳
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = sdf.format(new Date());
+
+        // 拼接文件名、时间戳和扩展名
+        return filename + "_" + timestamp + extension;
+    }
+
+    // 将 CommonsMultipartFile 转换为 File
+    public File convertMultiPartToFile(CommonsMultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
     }
 
     @RequestMapping("User/Edition/uploadFile")
@@ -132,7 +175,7 @@ public class FileController {
 
     @RequestMapping(value = "Cropper/uploadFile")
     @ResponseBody
-    public String cropper(String file,HttpServletRequest request) throws Exception {
+    public String cropper(String file, HttpServletRequest request) throws Exception {
 
         System.out.println("到了！");
         Decoder decoder = Base64.getDecoder();
@@ -149,9 +192,8 @@ public class FileController {
             if (!picP.exists()){
                 picP.mkdirs();
             }
-            FileController c = new FileController();
-            fileName = c.getFileName();
-            String resultUrl = picPath+"/"+fileName;
+            fileName = getFileName();
+            String resultUrl = picPath + "/" + fileName;
             FileOutputStream out = new FileOutputStream(resultUrl); // 输出文件路径
             out.write(imgByte);
             out.close();
@@ -171,8 +213,15 @@ public class FileController {
     }
 
     public static void main(String[] args) {
-        FileController c = new FileController();
-        System.out.println(c.getFileName());
+//        FileController c = new FileController();
+//        System.out.println(c.getFileName());
+
+//        S3Client s3Client = S3ClientGetter.s3Client();
+//        ListBucketsResponse listBucketsResponse = s3Client.listBuckets();
+//        for (Bucket bucket : listBucketsResponse.buckets()) {
+//            System.out.println(bucket.name());
+//        }
+        S3ClientGetter.getS3PresignedUrl("img/arki_profile_pic.d3d24c33.jpg");
     }
 
 }
