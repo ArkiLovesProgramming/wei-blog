@@ -12,9 +12,10 @@ function pfEditionUploadFile(file,type) {
         dataType : "json",
         data : param,
         async : true,
-        success : function(data) {
+        success : async function(data) {
             let url = data.url;
-            console.log(url);
+            // url = await getPresignedUrl(url);
+            // console.log(url);
             if (type == "bg") $("#realBgPicUrl").text(url);
             if (type == "pf") $("#realPfPicUrl").text(url);
 
@@ -54,9 +55,9 @@ function createCanvas(type){
                     width:w,   // 裁剪后的长宽
                     height:h
                 }).toBlob(function(blob){
-                    if (type == "bg") {
+                    if (type === "bg") {
                         $(".backgroung-pic-edtion>img").attr('src', URL.createObjectURL(blob));    // 将裁剪后的图片放到指定标签展示
-                    } else if (type == "pf") {
+                    } else if (type === "pf") {
                         $(".profile-pic-edtion>img").attr('src', URL.createObjectURL(blob));
                     }
                 });

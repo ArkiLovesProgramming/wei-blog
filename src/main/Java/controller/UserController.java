@@ -1,6 +1,7 @@
 package controller;
 
 
+import config.S3ClientGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,7 @@ public class UserController {
         user.setEmail(email);
         user.setRegion("");
         user.setPassword(password);
-        user.setProfilePicUrl("images/icon/touxiang.png");
+        user.setProfilePicUrl("users/image/default_profile.jpg");
         user.setBgPicUrl("images/profile/defaultBg.png");
         user.setLikedContentIds("");
         user.setCreatingTime(dateUtility.getDate());
@@ -120,6 +121,9 @@ public class UserController {
     public HashMap checkUser(String email, String password, HttpServletRequest request){
         HttpSession session=request.getSession();
         User user = userService.checkUser(email,password);
+        // 从 s3 中解析图片
+        user.setBgPicUrl(S3ClientGetter.getS3PresignedUrl(user.getBgPicUrl()));
+        user.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(user.getProfilePicUrl()));
         session.setAttribute("user",user);
         HashMap map = new HashMap<>();
         map.put("user", user);
@@ -159,7 +163,7 @@ public class UserController {
         if (thisuser.getSignature().equals(user.getSignature())) user.setSignature(null);
         if (thisuser.getRegion().equals(user.getRegion())) user.setRegion(null);
         if (thisuser.getGender().equals(user.getGender())) user.setGender(null);
-        if (user.getProfilePicUrl().equals("")) user.setProfilePicUrl(null);
+        if (user.getProfilePicUrl().equals("")) user.setProfilePicUrl(null);    // 这里故意等于空的，可以让 mybatis 不去更新对应值
         if (user.getBgPicUrl().equals("")) user.setBgPicUrl(null);
         user.setId(thisuser.getId());
         try {
@@ -167,7 +171,10 @@ public class UserController {
         } catch (Exception e){
             e.printStackTrace();
         }
-        session.setAttribute("user",userService.getUserById(thisuser.getId()));
+        user = userService.getUserById(thisuser.getId());
+        user.setBgPicUrl(S3ClientGetter.getS3PresignedUrl(user.getBgPicUrl()));
+        user.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(user.getProfilePicUrl()));
+        session.setAttribute("user", user);
         return "{\"myStatus\":\"success\"}";
     }
 
@@ -176,15 +183,18 @@ public class UserController {
         request.setAttribute("indexType","normal");
         HttpSession session = request.getSession();
         User thisUser = userService.getUserById(userId);
+        thisUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getProfilePicUrl()));
+        thisUser.setBgPicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getBgPicUrl()));
         request.setAttribute("detailUser",thisUser);
         Map<String, Object> conIdMapUser = new HashMap<>();
         List<String> userIds = new ArrayList<String>();
         userIds.add(userId);
         List<Content> contents = contentService.conByAuthIds(userIds,null);
         for (Content content : contents) {
-            if (!content.getParentId().equals('0')){
+            if (!content.getParentId().equals("0")){
                 String pConAuthorId = contentService.getSField("authorId", content.getParentId());
                 User author = userService.getUserById(pConAuthorId);
+                author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                 conIdMapUser.put(content.getParentId(),author);
             }
         }
@@ -196,10 +206,10 @@ public class UserController {
         for (Content content : mediaContents) {
             if (!content.getPictureURL().equals("0")){
                 if (content.getPictureURL().indexOf(",")!=-1){
-                    showPics.add(content.getPictureURL().split(",")[0]);
-                    showPics.add(content.getPictureURL().split(",")[1]);
+                    showPics.add(S3ClientGetter.getS3PresignedUrl(content.getPictureURL().split(",")[0]));
+                    showPics.add(S3ClientGetter.getS3PresignedUrl(content.getPictureURL().split(",")[1]));
                 } else {
-                    showPics.add(content.getPictureURL());
+                    showPics.add(S3ClientGetter.getS3PresignedUrl(content.getPictureURL()));
                 }
             }
         }
@@ -213,6 +223,8 @@ public class UserController {
     public String detailUserByType(@PathVariable String userId,@PathVariable String type,HttpServletRequest request){
         request.setAttribute("indexType",type);
         User thisUser = userService.getUserById(userId);
+        thisUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getProfilePicUrl()));
+        thisUser.setBgPicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getBgPicUrl()));
         request.setAttribute("detailUser",thisUser);
         if (type.equals("likes")){
             String likedCons = userService.getSField("likedContentIds",userId);
@@ -221,10 +233,12 @@ public class UserController {
             Map<String, Object> indexConIdMapUser = new HashMap<>();
             for (Content content : contents){
                 User author = userService.getUserById(content.getAuthorId());
+                author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                 indexConIdMapUser.put(content.getId(),author);
                 if (!content.getParentId().equals("0")){
                     String pConAuthorId = contentService.getSField("authorId",content.getParentId());
                     User pcAuthor = userService.getUserById(pConAuthorId);
+                    pcAuthor.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(pcAuthor.getProfilePicUrl()));
                     indexConIdMapUser.put(content.getParentId(),pcAuthor);
                 }
             }
@@ -234,9 +248,10 @@ public class UserController {
             Map<String, Object> conIdMapUser = new HashMap<>();
             List<Content> mediaContents = contentService.mediaConByAuthId(userId,null);
             for (Content content : mediaContents) {
-                if (!content.getParentId().equals('0')){
+                if (!content.getParentId().equals("0")){
                     String pConAuthorId = contentService.getSField("authorId", content.getParentId());
                     User author = userService.getUserById(pConAuthorId);
+                    author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                     conIdMapUser.put(content.getParentId(),author);
                 }
             }

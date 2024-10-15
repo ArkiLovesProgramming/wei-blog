@@ -1,6 +1,7 @@
 package controller;
 
 
+import config.S3ClientGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,7 @@ public class SearchController {
                     if (!content.getParentId().equals("0")){
                         Content pc = contentService.conById(content.getParentId());
                         User pcAuthor = userService.getUserById(pc.getAuthorId());
+                        pcAuthor.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(pcAuthor.getProfilePicUrl()));
                         conIdMapUser.put(content.getParentId(),pcAuthor);
                     }
 
@@ -65,6 +67,7 @@ public class SearchController {
             }
             for (Content content : resultContents){
                 User author = userService.getUserById(content.getAuthorId());
+                author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                 conIdMapUser.put(content.getId(),author);
             }
 //            top页面的user list
@@ -72,6 +75,7 @@ public class SearchController {
             List<Similarity> simiList = new ArrayList<>();
             for (int i = 0;i<allUsers.size();i++) {
                 User user = allUsers.get(i);
+                user.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(user.getProfilePicUrl()));
                 String email = user.getEmail();
                 String name = user.getName();
                 int simiarity1 = (int) (dataUtility.similarity(keyword,email)*100000);
@@ -127,6 +131,7 @@ public class SearchController {
                     if (!content.getParentId().equals("0")){
                         Content pc = contentService.conById(content.getParentId());
                         User pcAuthor = userService.getUserById(pc.getAuthorId());
+                        pcAuthor.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(pcAuthor.getProfilePicUrl()));
                         conIdMapUser.put(content.getParentId(),pcAuthor);
                     }
                     resultContents.add(content);
@@ -134,6 +139,7 @@ public class SearchController {
             }
             for (Content content : resultContents){
                 User author = userService.getUserById(content.getAuthorId());
+                author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                 conIdMapUser.put(content.getId(),author);
             }
             request.setAttribute("schTopContents",resultContents);
@@ -144,6 +150,7 @@ public class SearchController {
             List<Similarity> simiList = new ArrayList<>();
             for (int i = 0;i<allUsers.size();i++) {
                 User user = allUsers.get(i);
+                user.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(user.getProfilePicUrl()));
                 String email = user.getEmail();
                 String name = user.getName();
                 int simiarity1 = (int) (dataUtility.similarity(keyword,email)*100000);
@@ -182,6 +189,7 @@ public class SearchController {
                     if (!content.getParentId().equals("0")){
                         Content pc = contentService.conById(content.getParentId());
                         User pcAuthor = userService.getUserById(pc.getAuthorId());
+                        pcAuthor.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(pcAuthor.getProfilePicUrl()));
                         conIdMapUser.put(content.getParentId(),pcAuthor);
                     }
                     resultContents.add(content);
@@ -189,6 +197,7 @@ public class SearchController {
             }
             for (Content content : resultContents){
                 User author = userService.getUserById(content.getAuthorId());
+                author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                 conIdMapUser.put(content.getId(),author);
             }
             request.setAttribute("schPhotoContents",resultContents);
@@ -206,6 +215,7 @@ public class SearchController {
         Map<String, Object> resultMap = new HashMap<>();
         for (int i = 0;i<allUsers.size();i++) {
             User user = allUsers.get(i);
+            user.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(user.getProfilePicUrl()));
             String email = user.getEmail();
             String name = user.getName();
             int simiarity1 = (int) (dataUtility.similarity(keyword,email)*100000);
@@ -262,6 +272,7 @@ public class SearchController {
         List<Similarity> simiList = new ArrayList<>();
         for (int i = 0;i<allUsers.size();i++) {
             User user = allUsers.get(i);
+            user.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(user.getProfilePicUrl()));
             String email = user.getEmail();
             String name = user.getName();
             int simiarity1 = (int) (dataUtility.similarity(keyword,email)*100000);

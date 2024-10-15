@@ -1,3 +1,19 @@
+function getPresignedUrl(key) {
+	let url = `File/Messages/presignedUrl?key=${key}`;
+	return new Promise(function(resolve, reject) {
+		$.ajax({
+			type: "get",
+			url: url,
+			success: function(data) {
+				resolve(data); // 成功时返回 URL
+			},
+			error: function(error) {
+				reject(error); // 错误时返回错误信息
+			}
+		});
+	});
+}
+
 
 // 跳转到detailcontent的ajax
 //update: 变成拼接字符串的形式，又controller负责转发，解决了返回不能到上一个内容的问题
@@ -519,7 +535,8 @@ $(document).ready(function(){
 	function reLoadSource(img){
 		let d = new Date;
 		src = img.attr("src");
-		img.attr("src",src+"?timestamp="+d.getTime());
+		img.attr("src",src);
+		// img.attr("src",src+"?timestamp="+d.getTime());
 	}
 
 	$(".double_picture_frame img").on("load",function(){

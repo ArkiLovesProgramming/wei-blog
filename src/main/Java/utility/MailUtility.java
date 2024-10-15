@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class MailUtility {
 
-    static String baseURL = "http://localhost:80";
+    static String baseURL = "http://3.98.136.76:80";
 
     public boolean sendMail(String name,String email,String password, String emailtoken) throws MessagingException, UnsupportedEncodingException {
         Properties props = new Properties();
@@ -33,7 +33,7 @@ public class MailUtility {
         msg.setSubject("WEIBlog registration email verification");
         // 设置邮件内容
         //msg.setText("您的昵称是："+name+"您的邮箱账号是："+email+" 您的登录密码是:"+password+" 您可以点击链接进行验证注册:"+"12312312312313.com");
-        String href = "http://" + baseURL + "/User/activateUser?email=" + email + "&emailtoken=" + emailtoken;
+        String href = baseURL + "/User/activateUser?email=" + email + "&emailtoken=" + emailtoken;
         String htmlText = "<div style=\"text-align: center;height: 46px;color: #3f9bff;font-size: 30px;font-weight: 900;line-height: 46px;\">\n" +
                 "\t\t\tWEI\n" +
                 "\t\t</div>\n" +

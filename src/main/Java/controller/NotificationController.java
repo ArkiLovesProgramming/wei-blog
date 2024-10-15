@@ -1,5 +1,6 @@
 package controller;
 
+import config.S3ClientGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,7 @@ public class NotificationController {
             if (!notification.getUserId().equals("")){
                 String userId = notification.getUserId();
                 User thisuser = userService.getUserById(userId);
+                thisuser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(thisuser.getProfilePicUrl()));
                 notisIdMapUser.put(notification.getId(),thisuser);
             }
         }

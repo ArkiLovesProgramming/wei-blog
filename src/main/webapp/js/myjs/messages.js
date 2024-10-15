@@ -184,12 +184,48 @@ function messageFileUpload(){
 	return url;
 }
 
+function messageFileUpload2() {
+	return new Promise(function(resolve, reject) {
+		$.ajax({
+			type: "post",
+			url: "File/Messages/uploadFile",
+			data: new FormData($("#msgFile-form")[0]),
+			contentType: false,
+			processData: false,
+			success: function(data) {
+				resolve(data); // 成功时返回 URL
+			},
+			error: function(error) {
+				alert("上传失败");
+				console.log("失败原因：" + error);
+				reject(error); // 错误时返回错误信息
+			}
+		});
+	});
+}
+
 function changeLastCIMRadius(){
 	changeCIMRadius($(".chating_items_main").last());
 }
 
-function addChat(textContent,contactId) {
-	let url = messageFileUpload();
+function getPresignedUrl(key) {
+	let url = `File/Messages/presignedUrl?key=${key}`;
+	return new Promise(function(resolve, reject) {
+		$.ajax({
+			type: "get",
+			url: url,
+			success: function(data) {
+				resolve(data); // 成功时返回 URL
+			},
+			error: function(error) {
+				reject(error); // 错误时返回错误信息
+			}
+		});
+	});
+}
+
+async function addChat(textContent,contactId) {
+	let url = await messageFileUpload2();
 	let pictureURL;
 	let videoURL;
 	if (url.indexOf("/image/") != -1) {
@@ -213,8 +249,15 @@ function addChat(textContent,contactId) {
 		url : "Messages/addChat",
 		contentType : "application/json",
 		data : chat,
-		success: function(e) {
+		success: async function(e) {
 			let chat = e;
+			console.log(chat);
+			if (chat.videoURL !== "0") {
+				chat.videoURL = await getPresignedUrl(chat.videoURL);
+			}
+			if (chat.pictureURL !== "0") {
+				chat.pictureURL = await getPresignedUrl(chat.pictureURL);
+			}
 			let myChatItem = createMyChat(chat);
 			$(".chating_area .chating").append(myChatItem);
 			$(".typingarea-cover").hide();

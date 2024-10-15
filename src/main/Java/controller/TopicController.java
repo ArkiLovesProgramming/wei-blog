@@ -1,6 +1,7 @@
 package controller;
 
 
+import config.S3ClientGetter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -204,14 +205,15 @@ public class TopicController {
         List<User> topicUsers = userService.usersByIds(UserInTopicIds,orderSql);
         List<String> profilePics = new ArrayList<>();
         for (User u : topicUsers){
-            profilePics.add(u.getProfilePicUrl());
+            profilePics.add(S3ClientGetter.getS3PresignedUrl(u.getProfilePicUrl()));
         }
         while (profilePics.size()<4){
-            profilePics.add("images/icon/touxiang.png");
+            profilePics.add("users/image/default_profile.jpg");
         }
         Map<String, Object> conIdMapUser = new HashMap<>();
         for (Content content : contents) {
             User author = userService.getUserById(content.getAuthorId());
+            author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
             conIdMapUser.put(content.getId(),author);
         }
         request.setAttribute("detailTopic",detailTopic);
