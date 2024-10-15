@@ -191,6 +191,13 @@ public class UserController {
         userIds.add(userId);
         List<Content> contents = contentService.conByAuthIds(userIds,null);
         for (Content content : contents) {
+            // 保证这个 level2com content 的图片视频正常显示
+            if (!content.getVideoURL().equals("0")) {
+                content.setVideoURL(S3ClientGetter.getS3PresignedUrl(content.getVideoURL()));
+            }
+            if (!content.getPictureURL().equals("0")) {
+                content.setPictureURL(S3ClientGetter.getS3PresignedUrl(content.getPictureURL()));
+            }
             if (!content.getParentId().equals("0")){
                 String pConAuthorId = contentService.getSField("authorId", content.getParentId());
                 User author = userService.getUserById(pConAuthorId);

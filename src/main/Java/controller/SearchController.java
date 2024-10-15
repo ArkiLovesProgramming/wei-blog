@@ -54,7 +54,7 @@ public class SearchController {
                 String textContent = content.getTextContent();
                 textContent = dataUtility.removeHtmlTags(textContent);
                 if (dataUtility.similarity(textContent,keyword)>0.2){
-                    System.out.println("这个content满足大于50，匹配度是："+dataUtility.similarity(textContent,keyword));
+//                    System.out.println("这个content满足大于50，匹配度是："+dataUtility.similarity(textContent,keyword));
                     if (!content.getParentId().equals("0")){
                         Content pc = contentService.conById(content.getParentId());
                         User pcAuthor = userService.getUserById(pc.getAuthorId());
@@ -127,7 +127,7 @@ public class SearchController {
                 String textContent = content.getTextContent();
                 textContent = dataUtility.removeHtmlTags(textContent);
                 if (dataUtility.similarity(textContent,keyword)>0.2){
-                    System.out.println("这个content满足大于50，匹配度是："+dataUtility.similarity(textContent,keyword));
+//                    System.out.println("这个content满足大于50，匹配度是："+dataUtility.similarity(textContent,keyword));
                     if (!content.getParentId().equals("0")){
                         Content pc = contentService.conById(content.getParentId());
                         User pcAuthor = userService.getUserById(pc.getAuthorId());
@@ -185,7 +185,6 @@ public class SearchController {
                 String textContent = content.getTextContent();
                 textContent = dataUtility.removeHtmlTags(textContent);
                 if (dataUtility.similarity(textContent,keyword)>0.2){
-                    System.out.println("这个content满足大于50，匹配度是："+dataUtility.similarity(textContent,keyword));
                     if (!content.getParentId().equals("0")){
                         Content pc = contentService.conById(content.getParentId());
                         User pcAuthor = userService.getUserById(pc.getAuthorId());

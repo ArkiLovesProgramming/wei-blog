@@ -129,6 +129,15 @@ public class ContentController {
         List<Content> allContents = new ArrayList<>();
         allContents = contentService.getAllContents();
         HttpSession session = request.getSession();
+        for (Content content : allContents) {
+            // 保证这个 level2com content 的图片视频正常显示
+            if (!content.getVideoURL().equals("0")) {
+                content.setVideoURL(S3ClientGetter.getS3PresignedUrl(content.getVideoURL()));
+            }
+            if (!content.getPictureURL().equals("0")) {
+                content.setPictureURL(S3ClientGetter.getS3PresignedUrl(content.getPictureURL()));
+            }
+        }
         session.setAttribute("allContents",allContents);
 //        System.out.println(allContents.toString());
         return "seccess";
@@ -360,15 +369,19 @@ public class ContentController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // 保证这个 content 的图片视频正常显示
+        if (!thisContent.getVideoURL().equals("0")) {
+            thisContent.setVideoURL(S3ClientGetter.getS3PresignedUrl(thisContent.getVideoURL()));
+        }
+        if (!thisContent.getPictureURL().equals("0")) {
+            thisContent.setPictureURL(S3ClientGetter.getS3PresignedUrl(thisContent.getPictureURL()));
+        }
         session.setAttribute("detailContent",thisContent);//session: detailContent
         Map<String, Object> comIdMapUser = new HashMap<>();//评论内容id对于相应user，包括当前内容的user
         Map<String, List<Content>> comIdMapChildCom = new HashMap<>();//评论内容id对于相应子评论list
         thisUser.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(thisUser.getProfilePicUrl()));
         comIdMapUser.put(contentId,thisUser);
         if (!thisContent.getLevel().equals("0")){//放入父内容的信息
-            for (int i = 0;i<5;i++){
-                System.out.println("========================");
-            }
             Content pC = (Content) contentService.conById(thisContent.getParentId());
             User parentContentAuthor = userService.getUserById(pC.getAuthorId());
             parentContentAuthor.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(parentContentAuthor.getProfilePicUrl()));
@@ -381,15 +394,27 @@ public class ContentController {
         }
         session.removeAttribute("comments");
         if (childContents.size() > 0){
-            System.out.println("子评论不为空！！！");
-            session.setAttribute("comments",childContents);
             for (Content childContent : childContents) {
+                // 保证这个 level2com content 的图片视频正常显示
+                if (!childContent.getVideoURL().equals("0")) {
+                    childContent.setVideoURL(S3ClientGetter.getS3PresignedUrl(childContent.getVideoURL()));
+                }
+                if (!childContent.getPictureURL().equals("0")) {
+                    childContent.setPictureURL(S3ClientGetter.getS3PresignedUrl(childContent.getPictureURL()));
+                }
                 User author = userService.getUserById(childContent.getAuthorId());
                 author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(author.getProfilePicUrl()));
                 comIdMapUser.put(childContent.getId(),author);
                 List<Content> level2coms = contentService.getChildCon(childContent.getId(),String.valueOf(childLevel));
                 if (level2coms.size() > 0){
                     for (Content level2com : level2coms) {
+                        // 保证这个 level2com content 的图片视频正常显示
+                        if (!level2com.getVideoURL().equals("0")) {
+                            level2com.setVideoURL(S3ClientGetter.getS3PresignedUrl(level2com.getVideoURL()));
+                        }
+                        if (!level2com.getPictureURL().equals("0")) {
+                            level2com.setPictureURL(S3ClientGetter.getS3PresignedUrl(level2com.getPictureURL()));
+                        }
                         User level2author = userService.getUserById(level2com.getAuthorId());
                         level2author.setProfilePicUrl(S3ClientGetter.getS3PresignedUrl(level2author.getProfilePicUrl()));
                         comIdMapUser.put(level2com.getId(),level2author);
@@ -397,8 +422,8 @@ public class ContentController {
                     comIdMapChildCom.put(childContent.getId(),level2coms);
                 }
             }
+            session.setAttribute("comments",childContents);
         }
-        System.out.println("comIdMapChildCom===>"+comIdMapChildCom);
         session.setAttribute("comIdMapUser",comIdMapUser);//session: comIdMapUser
         session.setAttribute("comIdMapChildCom",comIdMapChildCom);//session: comIdMapChildCom
 //        return "thisContent==>"+thisContent.toString()+" comIdMapUser==>"+comIdMapUser.toString()+" comIdMapUser==>"+comIdMapChildCom.toString();
@@ -439,6 +464,13 @@ public class ContentController {
             if (contents.size() > 0){
                 topics.add(topic);
                 for (Content content : contents) {
+                    // 保证这个 level2com content 的图片视频正常显示
+                    if (!content.getVideoURL().equals("0")) {
+                        content.setVideoURL(S3ClientGetter.getS3PresignedUrl(content.getVideoURL()));
+                    }
+                    if (!content.getPictureURL().equals("0")) {
+                        content.setPictureURL(S3ClientGetter.getS3PresignedUrl(content.getPictureURL()));
+                    }
                     User author = userService.getUserById(content.getAuthorId());
                     conIdMapUser.put(content.getId(),author);
                 }
