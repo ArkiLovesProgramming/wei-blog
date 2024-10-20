@@ -117,6 +117,16 @@ function editUser(){
 
 $(document).ready(function(){
 
+	// who_list_item_pic 让 who to foller 里面的图片和用户名可以点击进入细节用户页面
+	$(".who_list_item_pic").click(function(){
+		var userId = $(this).data("user-id");
+		if (userId) {
+			var baseUrl = window.location.origin; // 自动获取协议、主机名和端口
+			var contextPath = window.location.pathname.split('/')[1]; // 获取应用的上下文路径
+			window.location.href = baseUrl + "/" + contextPath + "/User/detailUser/" + userId;
+		}
+	});
+
 	// 实现div变fixed,设置宽度100%不能匹配父元素的问题，并且实时设置账号模块的padding-top，这样账号模块就可以在最下面, 还有让accoutnid的span
 	function adjustCurrentAccountPT(){
 		var winh = $(".navigator").height();

@@ -422,7 +422,7 @@
 						</span>
                         <c:forEach var="user" items="${sessionScope.wtfUsers}">
                             <div class="who_list_item d-flex flex-row">
-                                <img class="who_list_item_pic" src="${user.profilePicUrl}" >
+                                <img class="who_list_item_pic" src="${user.profilePicUrl}" data-user-id="${user.id}">
                                 <div class="who_list_item_info">
 									<span class="wlii_name">
                                             ${user.name}

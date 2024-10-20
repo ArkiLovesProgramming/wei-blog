@@ -59,7 +59,7 @@ public class UserController {
         user.setRegion("");
         user.setPassword(password);
         user.setProfilePicUrl("users/image/default_profile.jpg");
-        user.setBgPicUrl("images/profile/defaultBg.png");
+        user.setBgPicUrl("users/image/default_bg.jpg");
         user.setLikedContentIds("");
         user.setCreatingTime(dateUtility.getDate());
         user.setFollowerNum(0);
